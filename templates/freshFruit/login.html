@@ -1,0 +1,45 @@
+{%extends 'freshFruit/base.html'%}
+{% load static from staticfiles %}
+
+{%block title%}天天生鲜-登录{%endblock%}
+{%block top%}{%endblock%}
+
+
+{%block content%}
+<div class="login_top clearfix">
+		<a href="{% url 'index:indexPage' %}" class="login_logo"><img src="{% static 'images/logo02.png' %}"></a>	
+	</div>
+
+	<div class="login_form_bg">
+		<div class="login_form_wrap clearfix">
+			<div class="login_banner fl"></div>
+			<div class="slogan fl">日夜兼程 · 急速送达</div>
+			<div class="login_form fr">
+				<div class="login_title clearfix">
+					<h1>用户登录</h1>
+					<a href="{% url 'registerLogin:register'%}">立即注册</a>
+				</div>
+				<div class="form_input">
+					<form action="{% url 'registerLogin:login'%}" method="post">
+						<input type="text" name="username" class="name_input" placeholder="请输入用户名">
+						<div class="user_error">{{error.name}}</div>
+						<input type="password" name="pwd" class="pass_input" placeholder="请输入密码">
+						<div class="pwd_error">{{error.password}}</div>
+						<div class="more_input clearfix">
+							<input type="checkbox" name="check">
+							<label>记住用户名</label>
+							<a href="#">忘记密码</a>
+						</div>
+						<input type="submit" name="" value="登录" class="input_submit">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+	<script type="text/javascript">
+		if ($('.user_error').html() != '') {$('.user_error').show()};
+		if ($('.pwd_error').html() != ''){$('.pwd_error').show()};
+	</script>
+{%endblock%}
+{%block class%}<div class="footer no-mp">{%endblock%}

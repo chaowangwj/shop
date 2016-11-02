@@ -1,0 +1,123 @@
+{%extends 'freshFruit/base_index.html'%}
+{% load static from staticfiles %}
+{%block title%}天天生鲜-商品详情{%endblock%}
+
+{%block cartnumber%}2{%endblock%}
+{%block content%}
+<script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/detail.js' %}"></script>
+
+<div class="breadcrumb">
+		<a href="#">全部分类</a>
+		<span>></span>
+		<a href="#">新鲜水果</a>
+		<span>></span>
+		<a href="#">商品详情</a>
+	</div>
+	
+
+	<div class="goods_detail_con clearfix">
+		<div class="goods_detail_pic fl"><img src="/static/{{good.imgPath}}"></div>
+		
+		<div class="goods_detail_list fr">
+			<h3>{{good.goodsName}}</h3>
+			<p>{{good.goodsDesc}}</p>
+			<div class="prize_bar">
+				<span class="show_pirze">¥<em>{{good.goodsPrice}}</em></span>
+				<span class="show_unit">单  位：500g</span>
+			</div>
+			<div class="goods_num clearfix">
+				<div class="num_name fl">数 量：</div>
+				<div class="num_add fl">
+					<input type="text" class="num_show fl" value="1">
+					<a href="javascript:;" class="add fr">+</a>
+					<a href="javascript:;" class="minus fr">-</a>	
+				</div> 
+			</div>
+			<div class="total">总价：<em>{{good.goodsPrice}}元</em></div>
+			<div class="operate_btn">
+				<a href="javascript:;" class="buy_btn">立即购买</a>
+				<a href="javascript:;" class="add_cart" id="add_cart">加入购物车</a>				
+			</div>
+		</div>
+	</div>
+	
+	<div class="main_wrap clearfix">
+		<div class="l_wrap fl clearfix">
+			<div class="new_goods">
+				<h3>新品推荐</h3>
+				<ul>
+					{%for i in newgoodslist %}
+					<li>
+						<a href="/detail/?goodsId={{i.id}}"><img src="{% static i.imgPath %}"></a>
+						<h4><a href="#">进口柠檬</a></h4>
+						<div class="prize">￥3.90</div>
+					</li>
+					{%endfor%}
+					<!-- <li>
+						<a href="#"><img src="{% static 'images/goods/goods002.jpg'%}"></a>
+						<h4><a href="#">玫瑰香葡萄</a></h4>
+						<div class="prize">￥16.80</div>
+					</li> -->
+				</ul>
+			</div>
+		</div>
+
+		<div class="r_wrap fr clearfix">
+			<ul class="detail_tab clearfix">
+				<li class="active">商品介绍</li>
+					
+				<li>商品评论</li>
+			</ul>
+
+			<div class="tab_content">
+				<dl>
+					<dt></dt>
+					<dd>{{good.goodsDetail|safe}}</dd>
+				</dl>
+			</div>
+
+		</div>
+	</div>
+
+
+ </script>
+	<div class="add_jump"></div>
+	<script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+	<script type="text/javascript">
+		var $add_x = $('#add_cart').offset().top;
+		var $add_y = $('#add_cart').offset().left;
+
+		var $to_x = $('#show_count').offset().top;
+		var $to_y = $('#show_count').offset().left;
+
+		$(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'})
+		$('#add_cart').click(function(){
+			$(".add_jump").stop().animate({
+				'left': $to_y+7,
+				'top': $to_x+7},
+				"fast", function() {
+					$(".add_jump").fadeOut('fast',function(){
+						$('#show_count').html(2);
+					});
+
+			});
+		})
+	</script>
+{%endblock%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

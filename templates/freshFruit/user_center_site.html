@@ -1,0 +1,93 @@
+{%extends 'freshFruit/base_user.html'%}
+{% load static from staticfiles %}
+{%block option%}用户中心{%endblock%}
+{%block tab_site%}<li><a href="{% url 'usercenter:user_center_site'%}" class="active">· 收货地址</a></li>{%endblock %}
+
+{%block content%}
+
+		<div class="right_content clearfix">
+				<h3 class="common_title2">收货地址</h3>
+				<div class="site_con">
+					<dl>
+						<dt>当前地址：</dt>
+						{% for i in addrinfo%}
+						<dd>{{ i.aProvince }} {{ i.aCity }} {%if i.aDis != None %}{{ i.aDis }}{%endif%}  {{i.aDetaAddr}}（{{ i.aAddressee }} 收） {{i.aPhoneNumber}}</dd>
+						{%endfor%}
+					</dl>					
+				</div>
+				<h3 class="common_title2">编辑地址</h3>
+				<div class="site_con">
+					<form action="{% url 'usercenter:user_center_site'%}" method="post">
+						<div class="form_group">
+							<label>收件人：</label>
+							<input type="text" name="addressee">
+						</div>
+
+						<div class='form_group from_arrer'>
+								<label>收件人省市区：</label>
+								<select id="pro" name='province'>
+							    <option value="">请选择省</option>
+								</select>
+								<select id="city" name='city'>
+								    <option value="">请选择市</option>
+								</select>
+								<select id="dis" name='dis'>
+								    <option value="">请选择区县</option>
+								</select>
+						</div>
+						<div class="form_group form_group2">
+							<label>详细地址：</label>
+							<textarea class="site_area" name="detaaddr"></textarea>
+						</div>
+						<div class="form_group">
+							<label>邮编：</label>
+							<input type="text" name="postcode">
+						</div>
+						<div class="form_group">
+							<label>手机：</label>
+							<input type="text" name="phonenumber">
+						</div>
+
+						<input type="submit" name="" value="提交" class="info_submit">
+					</form>
+				</div>
+		</div>
+	</div>
+	
+	
+    <script type="text/javascript">
+     $(function(){
+            $.get('/areal/',function(data) {
+                pro=$('#pro')
+                $.each(data.data,function(index,item){
+                    pro.append('<option value='+item.id+'>'+item.title+'</option>');
+                });
+            });
+
+
+            $('#pro').change(function () {
+            	$.get('/areal'+$(this).val()+'/',function (data) {
+            		city=$('#city');
+            		city.empty().append('<option value="">请选择市</option>');
+            		$('#dis').empty().append('<option value="">请选择区县</option>');
+            		$.each(data.data,function (index,item) {
+            			city.append('<option value='+item.id+'>'+item.title+'</option>');
+            		});
+            	});
+            });
+
+            $('#city').change(function(){
+            		$.get('/areal'+$(this).val()+'/',function (data) {
+            		dis=$('#dis');
+            		
+            		$.each(data.data,function (index,item){
+            			dis.append('<option value='+item.id+'>'+item.title+'</option>');
+            		});
+            	});
+            	
+            });
+          
+
+          });
+    </script>
+{%endblock%}

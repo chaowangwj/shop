@@ -1,0 +1,65 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{%block title%}{%endblock%} </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+</head>
+<body>
+{%block top%}
+<div class="header_con">
+		<div class="header">
+			<div class="welcome fl">欢迎来到天天生鲜!</div>
+			<div class="fr">
+				<div class="login_info fl">
+					欢迎您：<em>{{info.user.uName}}</em>
+				</div>
+				<div class="login_btn fl">
+					<a href="{% url 'registerLogin:login'%}">登录</a>
+					<span>|</span>
+					<a href="{% url 'registerLogin:register'%}">注册</a>
+				</div>
+				<div class="user_link fl">
+					<span>|</span>
+					<a href="{% url 'usercenter:user_center_info'%}">用户中心</a>
+					<span>|</span>
+					<a href="cart.html">我的购物车</a>
+					<span>|</span>
+					<a href="user_center_order.html">我的订单</a>
+				</div>
+			</div>
+		</div>		
+	</div>
+	<script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+	<script type="text/javascript">
+	$(function(){
+		if ($('.login_info em').html() != ''){
+			$('.login_info').show().siblings('.login_btn').hide();
+		}
+
+	})
+		
+	</script>
+{%endblock%}
+
+{%block menu%}{%endblock%}
+
+{%block content%}{%endblock%}
+
+{%block class%}<div class="footer">{%endblock%}
+		<div class="foot_link">
+			<a href="{% url 'index:aboutus' %}">关于我们</a>
+			<span>|</span>
+			<a href="{% url 'index:callus' %}">联系我们</a>
+			<span>|</span>
+			<a href="{% url 'index:joinus' %}">招聘人才</a>
+			<span>|</span>
+			<a href="{% url 'index:indexPage' %}">友情链接</a>		
+		</div>
+
+		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+		<p>电话：010-6543888    京ICP备654388888号</p>
+	</div>
+</body>
+</html>

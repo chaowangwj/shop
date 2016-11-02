@@ -1,0 +1,156 @@
+{%extends 'freshFruit/base_index.html'%}
+
+{% load static from staticfiles %}
+
+{%block title%}天天生鲜首页{%endblock%}
+
+{%block cartnumber%}2{%endblock%}
+
+{%block content%}
+<script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/slide.js' %}"></script>
+	<div class="navbar_con">
+		<div class="navbar">
+			<h1 class="fl">全部商品分类</h1>
+			<ul class="navlist fl">
+				<li><a href="">首页</a></li>
+				<li class="interval">|</li>
+				<li><a href="">手机生鲜</a></li>
+				<li class="interval">|</li>
+				<li><a href="">抽奖</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="center_con clearfix">
+		<ul class="subnav fl">
+			{% for temp in info.sorts %}
+			<li><a href="#model0{{temp.id}}" class="{{temp.sortClass}}">{{temp.sortName}}</a></li>
+			{% endfor temp %}
+		</ul>
+
+		<div class="slide fl">
+			<ul class="slide_pics">
+				<li><img src="{% static 'images/slide.jpg' %}" alt="幻灯片"></li>
+				<li><img src="{% static 'images/slide02.jpg' %}" alt="幻灯片"></li>
+				<li><img src="{% static 'images/slide03.jpg' %}" alt="幻灯片"></li>
+				<li><img src="{% static 'images/slide04.jpg' %}" alt="幻灯片"></li>
+			</ul>
+			<div class="prev"></div>
+			<div class="next"></div>
+			<ul class="points"></ul>
+		</div>
+		<div class="adv fl">
+			<a href="#"><img src="{% static 'images/adv01.jpg' %}"></a>
+			<a href="#"><img src="{% static 'images/adv02.jpg' %}"></a>
+		</div>
+	</div>
+
+
+
+{%for i in info.sorts %}
+<div class="list_model">
+		<div class="list_title clearfix">
+		
+			<h3 class="fl" id="model01">{{i.sortName}}</h3>
+			<div class="subtitle fl">
+				<span>|</span>
+				{%if forloop.counter = 1%}
+					{% for ot1 in info.goodOtherList1 %}
+								<a href="#">{{ot1.goodsName}}</a>
+					{% endfor %}
+				{%endif%}
+				{%if forloop.counter = 2%}
+					{% for ot1 in info.goodOtherList2 %}
+								<a href="#">{{ot1.goodsName}}</a>
+					{% endfor %}
+				{%endif%}
+				{%if forloop.counter = 3%}
+					{% for ot1 in info.goodOtherList3 %}
+								<a href="#">{{ot1.goodsName}}</a>
+					{% endfor %}
+				{%endif%}
+				{%if forloop.counter = 4%}
+					{% for ot1 in info.goodOtherList4 %}
+								<a href="#">{{ot1.goodsName}}</a>
+					{% endfor %}
+				{%endif%}
+				{%if forloop.counter = 5%}
+					{% for ot1 in info.goodOtherList5 %}
+								<a href="#">{{ot1.goodsName}}</a>
+					{% endfor %}
+				{%endif%}
+				{%if forloop.counter = 6%}
+					{% for ot1 in info.goodOtherList6 %}
+								<a href="#">{{ot1.goodsName}}</a>
+					{% endfor %}
+				{%endif%}
+			</div>
+			<a href="{% url 'goodslist:list'%}?order=id&&sort={{i.id}}&&page={{goodslist.pindex}}" class="goods_more fr" id="fruit_more">查看更多 ></a>
+		</div>
+				<div class="goods_con clearfix">
+			<div class="goods_banner fl"><img src="/static/{{i.sortPic}}"></div>
+			<ul class="goods_list fl">
+				{%if forloop.counter = 1%}
+					{% for good in info.goodMsgList1 %}
+				<li>
+					<h4><a href="#">{{ good.goodsName }}</a></h4>
+					<a href="#"><img src="/static/{{good.imgPath}}"></a>
+					<div class="prize">¥ {{ good.goodsPrice }}</div>
+				</li>
+					{% endfor %}
+				{%endif%}
+				{%if forloop.counter = 2%}
+					{% for good in info.goodMsgList2 %}
+				<li>
+					<h4><a href="#">{{ good.goodsName }}</a></h4>
+					<a href="#"><img src="/static/{{good.imgPath}}"></a>
+					<div class="prize">¥ {{ good.goodsPrice }}</div>
+				</li>
+					{% endfor %}
+				{%endif%}
+				{%if forloop.counter = 3%}
+					{% for good in info.goodMsgList3 %}
+				<li>
+					<h4><a href="#">{{ good.goodsName }}</a></h4>
+					<a href="#"><img src="/static/{{good.imgPath}}"></a>
+					<div class="prize">¥ {{ good.goodsPrice }}</div>
+				</li>
+					{% endfor %}
+				{%endif%}
+				{%if forloop.counter = 4%}
+					{% for good in info.goodMsgList4 %}
+				<li>
+					<h4><a href="#">{{ good.goodsName }}</a></h4>
+					<a href="#"><img src="/static/{{good.imgPath}}"></a>
+					<div class="prize">¥ {{ good.goodsPrice }}</div>
+				</li>
+					{% endfor %}
+				{%endif%}
+				{%if forloop.counter = 5%}
+					{% for good in info.goodMsgList5%}
+				<li>
+					<h4><a href="#">{{ good.goodsName }}</a></h4>
+					<a href="#"><img src="/static/{{good.imgPath}}"></a>
+					<div class="prize">¥ {{ good.goodsPrice }}</div>
+				</li>
+					{% endfor %}
+				{%endif%}
+				{%if forloop.counter = 6%}
+					{% for good in info.goodMsgList6%}
+				<li>
+					<h4><a href="#">{{ good.goodsName }}</a></h4>
+					<a href="#"><img src="/static/{{good.imgPath}}"></a>
+					<div class="prize">¥ {{ good.goodsPrice }}</div>
+				</li>
+					{% endfor %}
+				{%endif%}
+				
+			</ul>
+		</div>
+{%endfor%}
+
+
+{%endblock%}
+
+{% block navlist %}
+{% endblock %}

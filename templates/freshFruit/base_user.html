@@ -1,0 +1,30 @@
+{%extends 'freshFruit/base.html'%}
+{% load static from staticfiles %}
+{%block title%}天天生鲜-用户中心{%endblock%}
+
+{%block menu%}
+<div class="search_bar clearfix">
+		<a href="{% url 'index:indexPage' %}" class="logo fl"><img src="{% static 'images/logo.png' %}"></a>
+		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;{%block option%}{%endblock%}</div>
+		<div class="search_con fr">
+			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
+			<input type="button" class="input_btn fr" name="" value="搜索">
+		</div>		
+	</div>
+	<div class="main_con clearfix">
+		<div class="left_menu_con clearfix">
+			<h3>用户中心</h3>
+			<ul>
+				{%block tab_info%}<li><a href="{% url 'usercenter:user_center_info'%}" >· 个人信息</a></li>
+				{%endblock %}
+				{%block tab_order%}
+				<li><a href="{% url 'usercenter:user_center_order'%}" >· 全部订单</a></li>
+				{%endblock %}
+				{%block tab_site%}
+				<li><a href="{% url 'usercenter:user_center_site'%}" >· 收货地址</a></li>
+				{%endblock %}
+			</ul>
+		</div>
+
+
+{%endblock%}

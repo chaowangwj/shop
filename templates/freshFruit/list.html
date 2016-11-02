@@ -1,0 +1,82 @@
+{%extends 'freshFruit/base_index.html'%}
+{% load static from staticfiles %}
+{%block title%}天天生鲜-商品列表{%endblock%}
+
+{%block cartnumber%}2{%endblock%}
+
+{%block content%}
+<div class="breadcrumb">
+		<a href="#">全部分类</a>
+		<span>></span>
+		<a href="#">{{goodslist.goodsort.sortName}}</a>
+	</div>
+
+	<div class="main_wrap clearfix">
+		<div class="l_wrap fl clearfix">
+			<div class="new_goods">
+				<h3>新品推荐</h3>
+				<ul>
+				{% for i in goodslist.newgoodslist%}
+					<li>
+						<a href="/detail/?goodsId={{i.id}}"><img src="{% static i.imgPath %}"></a>
+						<h4><a href="#">{{i.goodsName}}</a></h4>
+						<div class="prize">￥{{i.goodsPrice}}</div>
+					</li>
+					{%endfor%}
+				
+				</ul>
+			</div>
+		</div>
+	
+		<div class="r_wrap fr clearfix">
+			<div class="sort_bar">
+				<a href="{% url 'goodslist:list'%}?order=id&&sort={{goodslist.sort}}&&page={{goodslist.pindex}}" class="{{ goodslist.active.id }}">默认</a>
+				<a href="{% url 'goodslist:list'%}?order=price&&sort={{goodslist.sort}}&&page={{goodslist.pindex}}" class="{{goodslist.active.price}}">价格</a>
+				<a href="{% url 'goodslist:list'%}?order=count&&sort={{goodslist.sort}}&&page={{goodslist.pindex}}" class="{{goodslist.active.count}}">人气</a>
+			</div>
+
+			<ul class="goods_type_list clearfix">
+			{% for i in goodslist.orderlist%}
+				<li>
+					<a href="/detail/?goodsId={{i.id}}"><img src="{% static i.imgPath %}"></a>
+					<h4><a href="/detail/?goodsId={{i.id}}">{{i.goodsName}}</a></h4>
+					<div class="operate">
+						<span class="prize">￥{{i.goodsPrice}}</span>
+						<span class="unit">{{i.goodsPrice}}/500g</span>
+						<a href="#" class="add_goods" title="加入购物车"></a>
+					</div>
+				</li>
+			{%endfor%}
+				
+			</ul>
+
+			<div class="pagenation">
+				<a href="#" id='toleft'><上一页</a>
+				{%for i in goodslist.plist%}
+				<a href="{% url 'goodslist:list'%}?order={{goodslist.order}}&&sort={{goodslist.sort}}&&page={{i}}" class="{%if i == goodslist.pIndex %}active{%endif%}">{{i}}</a>		
+				{%endfor%}
+				<a href="#" id='toright'>下一页></a>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+<script type="text/javascript">
+	$(function(){
+		var ahref=$('.pagenation .active').attr('href');
+		var apage=ahref.split('page=')
+		var max=parseInt($('#toright').prev('a').html())
+		index=ahref.indexOf(apage[1]);
+		// index2=ahref.indexOf('/?');
+	
+		left=parseInt(apage[1])-1;
+		right=parseInt(apage[1])+1;
+		if (left<=0){left=1};
+		if (right>=max){right=max};
+
+		$('#toleft').attr({ href: apage[0]+'page='+String(left)});
+		$('#toright').attr({ href: apage[0]+'page='+String(right)});
+	})
+
+
+</script>
+{%endblock%}
