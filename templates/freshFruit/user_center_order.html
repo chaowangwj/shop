@@ -6,75 +6,100 @@
 {%block content%}
 
 		<div class="right_content clearfix">
+			
 				<h3 class="common_title2">全部订单</h3>
+				{%for orde in orderlist%}
 				<ul class="order_list_th w978 clearfix">
 					<li class="col01">2016-8-21 17:36:24</li>
 					<li class="col02">订单号：56872934</li>
 					<li class="col02 stress">未支付</li>		
 				</ul>
-
 				<table class="order_list_table w980">
 					<tbody>
 						<tr>
 							<td width="55%">
+							{%for i in orde%}
 								<ul class="order_goods_list clearfix">					
 									<li class="col01"><img src="{% static 'images/goods02.jpg' %}"></li>
-									<li class="col02">嘎啦苹果嘎啦苹果<em>11.80元/500g</em></li>	
-									<li class="col03">1</li>
-									<li class="col04">11.80元</li>	
+									<li class="col02">{{i.goodsName}}<em>{{i.goodsPrice}}元/500g</em></li>	
+									<li class="col03">{{i.buyCount}}</li>
+									<li class="col04">{{i.goodsPrice}}元</li>	
 								</ul>
-								<ul class="order_goods_list clearfix">					
-									<li class="col01"><img src="{% static 'images/goods02.jpg' %}"></li>
-									<li class="col02">嘎啦苹果嘎啦苹果<em>11.80元/500g</em></li>	
-									<li class="col03">1</li>
-									<li class="col04">11.80元</li>	
-								</ul>
+							{%endfor%}
+					
 							</td>
-							<td width="15%">33.60元</td>
+							<td width="15%"></td>
 							<td width="15%">待付款</td>
 							<td width="15%"><a href="#" class="oper_btn">去付款</a></td>
 						</tr>
 					</tbody>
 				</table>
-				
-				<ul class="order_list_th w978 clearfix">
-					<li class="col01">2016-8-21 17:36:24</li>
-					<li class="col02">订单号：56872934</li>
-					<li class="col02 stress">已支付</li>			
-				</ul>
-				<table class="order_list_table w980">
-					<tbody>
-						<tr>
-							<td width="55%">
-								<ul class="order_goods_list clearfix">					
-									<li class="col01"><img src="{% static 'images/goods02.jpg' %}"></li>
-									<li class="col02">嘎啦苹果嘎啦苹果<em>11.80元/500g</em></li>	
-									<li class="col03">1</li>
-									<li class="col04">11.80元</li>	
-								</ul>
-								<ul class="order_goods_list clearfix">					
-									<li class="col01"><img src="{% static 'images/goods02.jpg' %}"></li>
-									<li class="col02">嘎啦苹果嘎啦苹果<em>11.80元/500g</em></li>	
-									<li class="col03">1</li>
-									<li class="col04">11.80元</li>	
-								</ul>
-							</td>
-							<td width="15%">33.60元</td>
-							<td width="15%">已付款</td>
-							<td width="15%"><a href="#" class="oper_btn">查看物流</a></td>
-						</tr>
-					</tbody>
-				</table>
+				{%endfor%}
+			
 
 				<div class="pagenation">
-					<a href="#"><上一页</a>
-					<a href="#" class="active">1</a>
-					<a href="#">2</a>
-					<a href="#">3</a>
-					<a href="#">4</a>
-					<a href="#">5</a>
-					<a href="#">下一页></a>
+					<a href="#" id='toleft'><上一页</a>
+					{%for index in plist%}
+					<a href="{% url 'usercenter:user_center_order'%}?page={{index}}" class="{%if index == pIndex %}active{%endif%}">{{index}}</a>
+					{%endfor%}
+					<a href="#" id='toright'>下一页></a>
 				</div>
 		</div>
 	</div>
-{%endblock%}
+	<script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+<script type="text/javascript">
+$(function (){
+	
+function add(a, b) {
+    var c, d, e;
+    try {
+        c = a.toString().split(".")[1].length;
+    } catch (f) {
+        c = 0;
+    }
+    try {
+        d = b.toString().split(".")[1].length;
+    } catch (f) {
+        d = 0;
+    }
+    return e = Math.pow(10, Math.max(c, d)), (mul(a, e) + mul(b, e)) / e;
+}
+
+	function mul(a, b) {
+    var c = 0,
+        d = a.toString(),
+        e = b.toString();
+    try {
+        c += d.split(".")[1].length;
+    } catch (f) {}
+    try {
+        c += e.split(".")[1].length;
+    } catch (f) {}
+    return Number(d.replace(".", "")) * Number(e.replace(".", "")) / Math.pow(10, c);
+}
+
+		// 分页
+		var ahref=$('.pagenation .active').attr('href');
+		var apage=ahref.split('page=')
+		var max=parseInt($('#toright').prev('a').html())
+		index=ahref.indexOf(apage[1]);
+		left=parseInt(apage[1])-1;
+		right=parseInt(apage[1])+1;
+		if (left<=0){left=1};
+		if (right>=max){right=max};
+		$('#toleft').attr({ href: apage[0]+'page='+String(left)});
+		$('#toright').attr({ href: apage[0]+'page='+String(right)});
+		// 总价
+		
+		$('tbody tr td').each(function () {
+			sum=0;
+			$(this).children('ul').children('li').children('em').each(function(){
+				sum += parseFloat($(this).html().split('元')[0])*100*parseInt($(this).parent().siblings('.col03').html())/100;
+				$(this).parent().parent().parent().next().html(sum+'元');
+			})
+	
+		})
+	})
+
+</script>
+{% endblock %}

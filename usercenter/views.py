@@ -5,8 +5,9 @@ from models import *
 from datetime import datetime
 from django.core.urlresolvers import reverse
 from . import der
+from django.core.paginator import Paginator
 
-@der.login_yz
+# @der.login_yz
 def user_center_info(request):
     name = request.session.get('name')
     user = UserInfo.objects.get(uName=name)
@@ -27,9 +28,6 @@ def user_center_info(request):
             user.save()
         return HttpResponseRedirect(reverse('usercenter:user_center_info'))
 
-@der.login_yz
-def user_center_order(request):
-    return render(request, 'freshFruit/user_center_order.html')
 
 # @der.login_yz
 def user_center_site(request):
@@ -79,7 +77,6 @@ def user_center_site(request):
             return HttpResponseRedirect(reverse('usercenter:user_center_site'))
             # return render(request,'usercenter/user_center_site.html')
 
-
 def areal(request):
 
     list1 = AreaInfo.objects.filter(aParent__isnull=True)
@@ -89,7 +86,6 @@ def areal(request):
         list2.append({'id': a.id, 'title': a.aTitle})
     return JsonResponse({'data': list2})
 
-
 def areal2(request, pid):
     # list1=AreaInfo.objects.filter(aParent_id=pid)
     list1 = AreaInfo.objects.get(pk=pid).areainfo_set.all()
@@ -97,3 +93,42 @@ def areal2(request, pid):
     for a in list1:
         list2.append({'id': a.id, 'title': a.aTitle})
     return JsonResponse({'data': list2})
+
+# @der.login_yz
+def user_center_order(request):
+    orderList=Orders.objects.filter(isDelete=False).filter(userOrder=1).order_by("-id")
+    orders=[]
+    for order in orderList:
+        ordercount = Orders.objects.filter(extra=order.extra)
+        orders.append(order.extra)
+        print ordercount
+    orders=list(set(orders))   #去重获得订单号
+
+    pIndex = request.GET.get('page', None) #获取页面index
+    orderlist2, plist, pIndex = pagTab(orders, pIndex, 2)  # 分页
+    if len(plist)>=3:   #页码显示页数
+        if len(plist)==pIndex:
+            plist=plist[pIndex-3:pIndex]
+        elif pIndex==1:
+            plist=plist[0:pIndex+2]
+        else:
+            plist=plist[pIndex-2:pIndex+1]
+  
+    dic={'orderlist':[Orders.objects.filter(extra=i) for i in orderlist2],
+    'plist':plist,
+    'pIndex':pIndex 
+    }
+   
+
+    return render(request, 'freshFruit/user_center_order.html',dic)
+
+
+def pagTab(list1, pIndex, num):
+    # print pIndex
+    p = Paginator(list1, num)
+    if pIndex == '' or pIndex == None:
+        pIndex = '1'
+    pIndex = int(pIndex)
+    list2 = p.page(pIndex)
+    plist = p.page_range
+    return list2, plist, pIndex
