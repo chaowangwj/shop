@@ -2,8 +2,6 @@
 {% load static from staticfiles %}
 {%block title%}天天生鲜-商品列表{%endblock%}
 
-{%block cartnumber%}2{%endblock%}
-
 {%block content%}
 <div class="breadcrumb">
 		<a href="#">全部分类</a>
@@ -43,7 +41,7 @@
 					<div class="operate">
 						<span class="prize">￥{{i.goodsPrice}}</span>
 						<span class="unit">{{i.goodsPrice}}/500g</span>
-						<a href="#" class="add_goods" title="加入购物车"></a>
+						<a href="javascript:;" class="add_goods" title="加入购物车" value='{{i.id}}'></a>
 					</div>
 				</li>
 			{%endfor%}
@@ -53,7 +51,7 @@
 			<div class="pagenation">
 				<a href="#" id='toleft'><上一页</a>
 				{%for i in goodslist.plist%}
-				<a href="{% url 'goodslist:list'%}?order={{goodslist.order}}&&sort={{goodslist.sort}}&&page={{i}}" class="{%if i == goodslist.pIndex %}active{%endif%}">{{i}}</a>		
+				<a href="{% url 'goodslist:list'%}?order={{goodslist.ordertype}}&&sort={{i.sort}}&&page={{i}}" class="{%if i == goodslist.pIndex %}active{%endif%}">{{i}}</a>		
 				{%endfor%}
 				<a href="#" id='toright'>下一页></a>
 			</div>
@@ -77,6 +75,24 @@
 		$('#toright').attr({ href: apage[0]+'page='+String(right)});
 	})
 
+	$('.add_goods').click(function(){
+			$.ajax({
+   	 	url: '/addcart/',
+    	type: 'POST',
+    	dataType: 'json',
+    	data:{'goodsName':$('.add_goods').attr('value'),'buyCount':1}
+	})
+	.done(function(data) {
+		
+		$('#show_count').html(data.number)
+		}
+	)
+	.fail(function() {
+		// error_name = 'True';
+    alert('服务器超时，请重试！');
+	});
+}
+		)
 
 </script>
 {%endblock%}

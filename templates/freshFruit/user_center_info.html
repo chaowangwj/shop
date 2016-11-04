@@ -9,9 +9,9 @@
 				<div class="info_con  clearfix">
 				<h3 class="common_title2">基本信息</h3>
 						<ul class="user_info_list">
-							<li><span>用户名：</span>{{info.user.uName}}</li>
-							<li><span>联系方式：</span>{{info.user.uPhoneNumber}}</li>
-							<li><span>联系地址：</span>{{info.user.uAddr}}</li>			
+							<li><span>用户名：</span>{{user.uName}}</li>
+							<li><span>联系方式：</span>{{user.uPhoneNumber}}</li>
+							<li><span>联系地址：</span>{{user.uAddr}}</li>			
 						</ul>
 				</div>
 				<div class="user_info_change">
@@ -27,7 +27,7 @@
 				<h3 class="common_title2">最近浏览</h3>
 				<div class="has_view_list">
 					<ul class="goods_type_list clearfix">
-				{% for i in info.recentsee%}
+				{% for i in recentsee%}
 				<li>
 					<a href="detail.html"><img src="/static/{{i.imgPath}}"></a>
 					<h4><a href="detail.html">{{i.goodsName}}</a></h4>

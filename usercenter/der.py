@@ -1,11 +1,28 @@
 from django.shortcuts import *
+from models import *
+
+def login_name(fn):
+    def fun(request, *args):
+        username = request.session.get('name', default='')
+        number=0
+        if username:
+			user=UserInfo.objects.get(uName=username)
+			number=user.cart_set.filter(isDelete=False).count()
+        dic = {
+            'user': user,
+            'number':number,
+
+        }
+        result = fn(request, dic, *args)
+        return result
+    return fun
 
 
 def login_yz(fn):
-    def yz(request):
-        if request.session.has_key('uname'):
-            r = fn(request)
+    def fun(request, *args):
+        if request.session.has_key('username'):
+            result = fn(request, *args)
         else:
-            r = redirect('/login/')
-        return r
-    return yz
+            result = redirect('/login/')
+        return result
+    return fun

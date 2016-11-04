@@ -3,8 +3,8 @@ from django.db import models
 from datetime import datetime
 from tinymce.models import HTMLField
 
-# 用户表1
 
+# 用户表
 
 class UserInfo(models.Model):
     uName = models.CharField(max_length=30)
@@ -22,7 +22,7 @@ class UserInfo(models.Model):
     def __str__(self):
         return self.uName.encode('utf-8')
 
-# 省市区表2
+# 省市区表
 
 
 class AreaInfo(models.Model):
@@ -35,11 +35,11 @@ class AreaInfo(models.Model):
     def __str__(self):
         return self.aTitle.encode('utf-8')
 
-# 地址信息表3
+# 地址信息表
 
 
 class AddrInfo(models.Model):
-    aName = models.CharField(max_length=30)
+    # aName = models.CharField(max_length=30) #账户名
     aProvince = models.CharField(max_length=15)
     aCity = models.CharField(max_length=15)
     aDis = models.CharField(max_length=15, null=True, blank=True)
@@ -56,15 +56,15 @@ class AddrInfo(models.Model):
         db_table = 'addrinfo'
 
     def __str__(self):
-        return self.aName.encode('utf-8')
+        return self.aPhoneNumber.encode('utf-8')
 
-# 商品种类表4
+# 商品种类表
 
 
 class GoodSort(models.Model):
     sortName = models.CharField(max_length=10)
-    extra = models.CharField(max_length=20,null=True,blank=True) #预留
     sortPic = models.ImageField(upload_to='uploads/')
+    sortClass = models.CharField(max_length=20 )#预留
 
     class Meta():
         db_table = 'goodsort'
@@ -72,7 +72,7 @@ class GoodSort(models.Model):
     def __str__(self):
         return self.sortName.encode('utf-8')
 
-# 商品表5
+# 商品表
 
 
 class Goods(models.Model):
@@ -92,7 +92,7 @@ class Goods(models.Model):
     def __str__(self):
         return self.goodsName.encode('utf-8')
 
-# 商品评论6
+# 商品评论
 
 
 class GoodsComment(models.Model):
@@ -108,7 +108,7 @@ class GoodsComment(models.Model):
     def __str__(self):
         return self.userName.encode('utf-8')
 
-# 购物车表7
+# 购物车表
 
 
 class Cart(models.Model):
@@ -124,26 +124,37 @@ class Cart(models.Model):
     def __str__(self):
         return self.goodsName.encode('utf-8')
 
-# 订单表8
+# 订单表
 
 
 class Orders(models.Model):
-    goodsName = models.CharField(max_length=30)
-    goodsPrice = models.DecimalField(max_digits=7, decimal_places=2)
-    buyCount = models.IntegerField()
+    
     isFinish = models.BooleanField(default=False)
     isDelete = models.BooleanField(default=False)
     orderTime = models.DateTimeField()
-    extra = models.CharField(max_length=20,null=True,blank=True) #订单号
+    orderNumber = models.CharField(max_length=20,null=True,blank=True) #预留
     userOrder = models.ForeignKey('UserInfo')
 
     class Meta():
         db_table = 'orders'
 
     def __str__(self):
+        return self.orderNumber.encode('utf-8')
+#订单详细表
+class OrderDetail(models.Model):
+    goodsName = models.CharField(max_length=30)
+    goodsPrice = models.DecimalField(max_digits=7, decimal_places=2)
+    buyCount = models.IntegerField()
+    orders_id = models.ForeignKey('Orders')
+    good_id = models.ForeignKey('Goods')
+
+    class Meta():
+        db_table = 'orderdetail'
+
+    def __str__(self):
         return self.goodsName.encode('utf-8')
 
-#最近浏览9
+#最近浏览
 class RecentSee(models.Model):
     goodsName=models.CharField(max_length=30)
     extra = models.CharField(max_length=20,null=True,blank=True) #预留
@@ -152,3 +163,6 @@ class RecentSee(models.Model):
         db_table='recentsee'
     def __str__(self):
         return self.goodsName.encode('utf-8')
+
+  
+

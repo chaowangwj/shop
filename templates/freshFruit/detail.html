@@ -2,7 +2,7 @@
 {% load static from staticfiles %}
 {%block title%}天天生鲜-商品详情{%endblock%}
 
-{%block cartnumber%}2{%endblock%}
+
 {%block content%}
 <script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/detail.js' %}"></script>
@@ -36,8 +36,8 @@
 			</div>
 			<div class="total">总价：<em>{{good.goodsPrice}}元</em></div>
 			<div class="operate_btn">
-				<a href="javascript:;" class="buy_btn">立即购买</a>
-				<a href="javascript:;" class="add_cart" id="add_cart">加入购物车</a>				
+				<a href="/placeoreder/?" class="buy_btn">立即购买</a>
+				<a href="javascript:;" class="add_cart" id="add_cart" value='{{good.id}}'>加入购物车</a>				
 			</div>
 		</div>
 	</div>
@@ -50,15 +50,11 @@
 					{%for i in newgoodslist %}
 					<li>
 						<a href="/detail/?goodsId={{i.id}}"><img src="{% static i.imgPath %}"></a>
-						<h4><a href="#">进口柠檬</a></h4>
-						<div class="prize">￥3.90</div>
+						<h4><a href="#">{{i.goodsName}}</a></h4>
+						<div class="prize">￥{{i.goodsPrice}}</div>
 					</li>
 					{%endfor%}
-					<!-- <li>
-						<a href="#"><img src="{% static 'images/goods/goods002.jpg'%}"></a>
-						<h4><a href="#">玫瑰香葡萄</a></h4>
-						<div class="prize">￥16.80</div>
-					</li> -->
+					
 				</ul>
 			</div>
 		</div>
@@ -83,27 +79,7 @@
 
  </script>
 	<div class="add_jump"></div>
-	<script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
-	<script type="text/javascript">
-		var $add_x = $('#add_cart').offset().top;
-		var $add_y = $('#add_cart').offset().left;
-
-		var $to_x = $('#show_count').offset().top;
-		var $to_y = $('#show_count').offset().left;
-
-		$(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'})
-		$('#add_cart').click(function(){
-			$(".add_jump").stop().animate({
-				'left': $to_y+7,
-				'top': $to_x+7},
-				"fast", function() {
-					$(".add_jump").fadeOut('fast',function(){
-						$('#show_count').html(2);
-					});
-
-			});
-		})
-	</script>
+	
 {%endblock%}
 
 

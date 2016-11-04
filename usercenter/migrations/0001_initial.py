@@ -91,23 +91,33 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('sortName', models.CharField(max_length=10)),
                 ('sortPic', models.ImageField(upload_to=b'uploads/')),
-                ('extra', models.CharField(max_length=20, null=True, blank=True)),
+                ('sortClass', models.CharField(max_length=20)),
             ],
             options={
                 'db_table': 'goodsort',
             },
         ),
         migrations.CreateModel(
-            name='Orders',
+            name='OrderDetail',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('goodsName', models.CharField(max_length=30)),
                 ('goodsPrice', models.DecimalField(max_digits=7, decimal_places=2)),
                 ('buyCount', models.IntegerField()),
+                ('good_id', models.ForeignKey(to='usercenter.Goods')),
+            ],
+            options={
+                'db_table': 'orderdetail',
+            },
+        ),
+        migrations.CreateModel(
+            name='Orders',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('isFinish', models.BooleanField(default=False)),
                 ('isDelete', models.BooleanField(default=False)),
                 ('orderTime', models.DateTimeField()),
-                ('extra', models.CharField(max_length=20, null=True, blank=True)),
+                ('orderNumber', models.CharField(max_length=20, null=True, blank=True)),
             ],
             options={
                 'db_table': 'orders',
@@ -150,6 +160,11 @@ class Migration(migrations.Migration):
             model_name='orders',
             name='userOrder',
             field=models.ForeignKey(to='usercenter.UserInfo'),
+        ),
+        migrations.AddField(
+            model_name='orderdetail',
+            name='orders_id',
+            field=models.ForeignKey(to='usercenter.Orders'),
         ),
         migrations.AddField(
             model_name='goods',

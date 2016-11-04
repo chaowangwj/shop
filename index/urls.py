@@ -7,6 +7,5 @@ urlpatterns = [
     url(r'^aboutus/$',views.aboutus,name='aboutus'),
     url(r'^callus/$',views.callus,name='callus'),
     url(r'^joinus/$',views.joinus,name='joinus'),
-    url(r'^test/$',views.test),
-]
+    ]
 

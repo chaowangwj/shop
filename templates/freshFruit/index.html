@@ -4,7 +4,6 @@
 
 {%block title%}天天生鲜首页{%endblock%}
 
-{%block cartnumber%}2{%endblock%}
 
 {%block content%}
 <script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
@@ -23,8 +22,8 @@
 	</div>
 	<div class="center_con clearfix">
 		<ul class="subnav fl">
-			{% for temp in info.sorts %}
-			<li><a href="#model0{{temp.id}}" class="{{temp.sortClass}}">{{temp.sortName}}</a></li>
+			{% for temp in message %}
+			<li><a href="#model{{temp.sort.id}}" class="{{temp.sort.sortClass}}">{{temp.sort.sortName}}</a></li>
 			{% endfor temp %}
 		</ul>
 
@@ -47,104 +46,32 @@
 
 
 
-{%for i in info.sorts %}
+{%for i in message %}
 <div class="list_model">
 		<div class="list_title clearfix">
 		
-			<h3 class="fl" id="model01">{{i.sortName}}</h3>
+			<h3 class="fl" id="model{{i.sort.id}}">{{i.sort.sortName}}</h3>
 			<div class="subtitle fl">
 				<span>|</span>
-				{%if forloop.counter = 1%}
-					{% for ot1 in info.goodOtherList1 %}
-								<a href="#">{{ot1.goodsName}}</a>
-					{% endfor %}
-				{%endif%}
-				{%if forloop.counter = 2%}
-					{% for ot1 in info.goodOtherList2 %}
-								<a href="#">{{ot1.goodsName}}</a>
-					{% endfor %}
-				{%endif%}
-				{%if forloop.counter = 3%}
-					{% for ot1 in info.goodOtherList3 %}
-								<a href="#">{{ot1.goodsName}}</a>
-					{% endfor %}
-				{%endif%}
-				{%if forloop.counter = 4%}
-					{% for ot1 in info.goodOtherList4 %}
-								<a href="#">{{ot1.goodsName}}</a>
-					{% endfor %}
-				{%endif%}
-				{%if forloop.counter = 5%}
-					{% for ot1 in info.goodOtherList5 %}
-								<a href="#">{{ot1.goodsName}}</a>
-					{% endfor %}
-				{%endif%}
-				{%if forloop.counter = 6%}
-					{% for ot1 in info.goodOtherList6 %}
-								<a href="#">{{ot1.goodsName}}</a>
-					{% endfor %}
-				{%endif%}
+				
+					{%for ogood in i.goodOtherList%}
+								<a href="#">{{ogood.goodsName}}</a>
+					{%endfor%}
+				
 			</div>
-			<a href="{% url 'goodslist:list'%}?order=id&&sort={{i.id}}&&page={{goodslist.pindex}}" class="goods_more fr" id="fruit_more">查看更多 ></a>
+			<a href="{% url 'goodslist:list'%}?sort={{i.sort.id}}" class="goods_more fr" id="fruit_more">查看更多 ></a>
 		</div>
 				<div class="goods_con clearfix">
-			<div class="goods_banner fl"><img src="/static/{{i.sortPic}}"></div>
+			<div class="goods_banner fl"><img src="/static/{{i.sort.sortPic}}"></div>
 			<ul class="goods_list fl">
-				{%if forloop.counter = 1%}
-					{% for good in info.goodMsgList1 %}
+					{% for good in i.goodMsgList %}
 				<li>
 					<h4><a href="#">{{ good.goodsName }}</a></h4>
 					<a href="#"><img src="/static/{{good.imgPath}}"></a>
 					<div class="prize">¥ {{ good.goodsPrice }}</div>
 				</li>
 					{% endfor %}
-				{%endif%}
-				{%if forloop.counter = 2%}
-					{% for good in info.goodMsgList2 %}
-				<li>
-					<h4><a href="#">{{ good.goodsName }}</a></h4>
-					<a href="#"><img src="/static/{{good.imgPath}}"></a>
-					<div class="prize">¥ {{ good.goodsPrice }}</div>
-				</li>
-					{% endfor %}
-				{%endif%}
-				{%if forloop.counter = 3%}
-					{% for good in info.goodMsgList3 %}
-				<li>
-					<h4><a href="#">{{ good.goodsName }}</a></h4>
-					<a href="#"><img src="/static/{{good.imgPath}}"></a>
-					<div class="prize">¥ {{ good.goodsPrice }}</div>
-				</li>
-					{% endfor %}
-				{%endif%}
-				{%if forloop.counter = 4%}
-					{% for good in info.goodMsgList4 %}
-				<li>
-					<h4><a href="#">{{ good.goodsName }}</a></h4>
-					<a href="#"><img src="/static/{{good.imgPath}}"></a>
-					<div class="prize">¥ {{ good.goodsPrice }}</div>
-				</li>
-					{% endfor %}
-				{%endif%}
-				{%if forloop.counter = 5%}
-					{% for good in info.goodMsgList5%}
-				<li>
-					<h4><a href="#">{{ good.goodsName }}</a></h4>
-					<a href="#"><img src="/static/{{good.imgPath}}"></a>
-					<div class="prize">¥ {{ good.goodsPrice }}</div>
-				</li>
-					{% endfor %}
-				{%endif%}
-				{%if forloop.counter = 6%}
-					{% for good in info.goodMsgList6%}
-				<li>
-					<h4><a href="#">{{ good.goodsName }}</a></h4>
-					<a href="#"><img src="/static/{{good.imgPath}}"></a>
-					<div class="prize">¥ {{ good.goodsPrice }}</div>
-				</li>
-					{% endfor %}
-				{%endif%}
-				
+	
 			</ul>
 		</div>
 {%endfor%}

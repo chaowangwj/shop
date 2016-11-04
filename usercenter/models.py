@@ -64,7 +64,7 @@ class AddrInfo(models.Model):
 class GoodSort(models.Model):
     sortName = models.CharField(max_length=10)
     sortPic = models.ImageField(upload_to='uploads/')
-    extra = models.CharField(max_length=20,null=True,blank=True) #预留
+    sortClass = models.CharField(max_length=20 )#预留
 
     class Meta():
         db_table = 'goodsort'
@@ -128,17 +128,28 @@ class Cart(models.Model):
 
 
 class Orders(models.Model):
-    goodsName = models.CharField(max_length=30)
-    goodsPrice = models.DecimalField(max_digits=7, decimal_places=2)
-    buyCount = models.IntegerField()
+    
     isFinish = models.BooleanField(default=False)
     isDelete = models.BooleanField(default=False)
     orderTime = models.DateTimeField()
-    extra = models.CharField(max_length=20,null=True,blank=True) #预留
+    orderNumber = models.CharField(max_length=20,null=True,blank=True) #预留
     userOrder = models.ForeignKey('UserInfo')
 
     class Meta():
         db_table = 'orders'
+
+    def __str__(self):
+        return self.orderNumber.encode('utf-8')
+#订单详细表
+class OrderDetail(models.Model):
+    goodsName = models.CharField(max_length=30)
+    goodsPrice = models.DecimalField(max_digits=7, decimal_places=2)
+    buyCount = models.IntegerField()
+    orders_id = models.ForeignKey('Orders')
+    good_id = models.ForeignKey('Goods')
+
+    class Meta():
+        db_table = 'orderdetail'
 
     def __str__(self):
         return self.goodsName.encode('utf-8')
