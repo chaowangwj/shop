@@ -21,14 +21,14 @@
 				</div>
 				<div class="form_input">
 					<form action="{% url 'registerLogin:login'%}" method="post">
-						<input type="text" name="username" class="name_input" placeholder="请输入用户名">
+						<input type="text" name="username" class="name_input" placeholder="请输入用户名" value="{{user.uName}}">
 						<div class="user_error">{{error.name}}</div>
-						<input type="password" name="pwd" class="pass_input" placeholder="请输入密码">
+						<input type="password" name="pwd" class="pass_input" placeholder="请输入密码" value="{{user.uPassword}}" >
 						<div class="pwd_error">{{error.password}}</div>
 						<div class="more_input clearfix">
 							<input type="checkbox" name="check">
 							<label>记住用户名</label>
-							<a href="#">忘记密码</a>
+							<a href="{% url 'registerLogin:changekw' %}">忘记密码</a>
 						</div>
 						<input type="submit" name="" value="登录" class="input_submit">
 					</form>

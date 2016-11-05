@@ -1,10 +1,12 @@
 # coding=utf-8
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import *
 from models import *
 import json
 from usercenter import der
+from django.core.urlresolvers import reverse
 # 首页
+# @der.login_yz
 @der.login_name
 def index(request,dic):
 	# 拿到产品分类信息
@@ -19,8 +21,11 @@ def index(request,dic):
 		'message':message,
 		})
 	
-
 	return render(request,'freshFruit/index.html',dic)
+
+def loginOut(request):
+	del request.session['name']
+	return HttpResponseRedirect(reverse('index:indexPage'))
 
 
 # 关于我们页面
@@ -32,3 +37,4 @@ def callus(request):
 # 招聘人才界面
 def joinus(request):
 	return render(request,'freshFruit/joinus.html')
+

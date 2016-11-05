@@ -5,6 +5,8 @@ def login_name(fn):
     def fun(request, *args):
         username = request.session.get('name', default='')
         number=0
+        user=''
+        print username
         if username:
 			user=UserInfo.objects.get(uName=username)
 			number=user.cart_set.filter(isDelete=False).count()
@@ -20,7 +22,7 @@ def login_name(fn):
 
 def login_yz(fn):
     def fun(request, *args):
-        if request.session.has_key('username'):
+        if request.session.has_key('name'):
             result = fn(request, *args)
         else:
             result = redirect('/login/')

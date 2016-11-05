@@ -16,7 +16,8 @@ def user_center_info(request,dic):
 		recentsee = dic['user'].recentsee_set.all()
 		goodlist = []
 		for i in recentsee:
-			goodlist.append(Goods.objects.get(goodsName=i.goodsName))
+			goodlist.append(Goods.objects.get(id=int(i.goodsName)))
+			# goodlist.append(Goods.objects.get(goodsName=i.goodsName))
 		
 		dic=dict(dic,**{ 'recentsee': goodlist[-5:]})
 		return render(request, 'freshFruit/user_center_info.html',dic )

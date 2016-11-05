@@ -4,30 +4,54 @@ from django.http import *
 from models import *
 from datetime import datetime
 from usercenter import der
-import os
+# import os
+from django.core.urlresolvers import reverse
 
 
 @der.login_name
 def detail(request,dic):
-	goodsId=request.GET.get('goodsId',None)
+	goodsId=request.GET.get('goodsId')
 	if goodsId:
 		good = Goods.objects.get(pk=goodsId)
 	newgoodslist=good.goodSort.goods_set.all().order_by("-gPubdate")[0:2]
-	# name=request.session.get('name')
-	# user=UserInfo.objects.get(uName=name)
-	# number=user.cart_set.filter(isDelete=False).count()
-	# print newgoodslist
-	# dic['good']=good
-	# dic['newgoodslist']=newgoodslist
+
+	GoodsComment=good.goodscomment_set.all().order_by("-commentDate")[0:2]
+	if dic['user']:
+		flag=False
+		rece= dic['user'].recentsee_set.all().order_by('-id')[0:5]
+		for i in rece:
+			if i.goodsName==goodsId:
+				flag=True
+		if not flag:
+			rec=RecentSee()
+			rec.goodsName=goodsId
+			rec.user_id=dic['user'].id
+			rec.save()
+			print '写入rec完成'
 	dic2 ={
 	'good':good,
-	'newgoodslist':newgoodslist
+	'newgoodslist':newgoodslist,
+	'GoodsComment':GoodsComment,
 	}
 	dic=dict(dic, **dic2)
-	
-
 	return render(request,'freshFruit/detail.html',dic)
 
+# @der.login_name
+def comment(request,gid):
+	# print request.POST
+	comment=request.POST.get('comment',None)
+	# goodId=request.POST.get('commgood',None)
+	# print comment,goodId
+	if comment and gid:
+		goodc=GoodsComment()
+		goodc.userName=request.session['name']
+		goodc.commentDate=datetime.now()
+		goodc.comment=comment
+		goodc.goods_id=int(gid)
+		goodc.save()
+		print gid
+		# print reverse('detail:detail',kwargs={'goodsId':goodId})reverse('detail:detail',args=[gid])
+		return HttpResponseRedirect('/detail/?goodsId='+gid)
 
 def addcart(request):
 	goodsID=request.POST.get('goodsName',None)

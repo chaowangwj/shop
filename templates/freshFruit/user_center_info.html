@@ -29,8 +29,8 @@
 					<ul class="goods_type_list clearfix">
 				{% for i in recentsee%}
 				<li>
-					<a href="detail.html"><img src="/static/{{i.imgPath}}"></a>
-					<h4><a href="detail.html">{{i.goodsName}}</a></h4>
+					<a href="/detail/?goodsId={{i.id}}"><img src="/static/{{i.imgPath}}"></a>
+					<h4><a href="/detail/?goodsId={{i.id}}">{{i.goodsName}}</a></h4>
 					<div class="operate">
 						<span class="prize">￥{{i.goodsPrice}}</span>
 						<span class="unit">{{i.goodsPrice}}/500g</span>

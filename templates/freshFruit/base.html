@@ -13,18 +13,25 @@
 			<div class="welcome fl">欢迎来到天天生鲜!</div>
 			<div class="fr">
 				<div class="login_info fl">
-					欢迎您：<em>{{info.user.uName}}</em>
+					欢迎您：<em>{{user.uName}}</em>
 				</div>
 				<div class="login_btn fl">
 					<a href="{% url 'registerLogin:login'%}">登录</a>
 					<span>|</span>
 					<a href="{% url 'registerLogin:register'%}">注册</a>
 				</div>
+
+				
+				<div class="login_btn fl" id='login_btn_out'>
+					<span>|</span>
+					<a href="/loginOut/">退出</a>
+				</div>
+
 				<div class="user_link fl">
 					<span>|</span>
 					<a href="{% url 'usercenter:user_center_info'%}">用户中心</a>
 					<span>|</span>
-					<a href="cart.html">我的购物车</a>
+					<a href="{% url 'cart:cart'%}">我的购物车</a>
 					<span>|</span>
 					<a href="{% url 'usercenter:user_center_order'%}">我的订单</a>
 				</div>
@@ -32,15 +39,22 @@
 		</div>		
 	</div>
 	<script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
-	<script type="text/javascript">
-	$(function(){
-		if ($('.login_info em').html() != ''){
-			$('.login_info').show().siblings('.login_btn').hide();
-		}
+		<script type="text/javascript">
+			$(function(){
+				if ($('.login_info em').html() != ''){
+					$('.login_info').show();
+					$('.login_btn').hide();
+					$('#login_btn_out').show();
+				}
+				else
+				{
+					$('.login_info').hide();
+					$('.login_btn').show();
+					$('#login_btn_out').hide();
+				}
+			})	
+		</script>
 
-	})
-		
-	</script>
 {%endblock%}
 
 {%block menu%}{%endblock%}

@@ -42,7 +42,8 @@ INSTALLED_APPS = (
     'usercenter',
     'goodslist',
     'index',
-    'detail'
+    'detail',
+    'cart',
 )
 
 MIDDLEWARE_CLASSES = (

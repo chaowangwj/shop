@@ -55,7 +55,7 @@
 				<span>|</span>
 				
 					{%for ogood in i.goodOtherList%}
-								<a href="#">{{ogood.goodsName}}</a>
+								<a href="/detail/?goodsId={{i.id}}">{{ogood.goodsName}}</a>
 					{%endfor%}
 				
 			</div>
@@ -66,8 +66,8 @@
 			<ul class="goods_list fl">
 					{% for good in i.goodMsgList %}
 				<li>
-					<h4><a href="#">{{ good.goodsName }}</a></h4>
-					<a href="#"><img src="/static/{{good.imgPath}}"></a>
+					<h4><a href="/detail/?goodsId={{good.id}}">{{ good.goodsName }}</a></h4>
+					<a href="/detail/?goodsId={{good.id}}"><img src="/static/{{good.imgPath}}"></a>
 					<div class="prize">¥ {{ good.goodsPrice }}</div>
 				</li>
 					{% endfor %}

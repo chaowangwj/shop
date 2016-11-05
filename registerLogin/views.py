@@ -82,7 +82,7 @@ from django.shortcuts import render
 from django.http import *
 from models import *
 from datetime import datetime
-
+from usercenter import der
 
 def index(request):
 	return render(request, 'freshFruit/index.html')
@@ -131,10 +131,10 @@ def regcheck(request):
 	else:
 		return HttpResponse('未接受到数据')
 
-
-def login(request):
+@der.login_name
+def login(request,dic):
 	if request.method == 'GET':
-		return render(request, 'freshFruit/login.html')
+		return render(request, 'freshFruit/login.html',dic)
 	elif request.method == 'POST':
 		name=request.POST.get('username',None)
 		password=request.POST.get('pwd',None)
@@ -144,9 +144,10 @@ def login(request):
 				if user.uPassword==password:
 					if request.POST.get('check', None) == 'on':
 						request.session['name'] = name   
-						request.session['password'] = password    #状态保持
+						# request.session['password'] = password    #状态保持
 					else:	
 						request.session['name'] = name
+						request.session.set_expiry(10)    #超时测试
 					return HttpResponseRedirect('/index/') 
 				else:
 					return render(request, 'freshFruit/login.html',{'error':{'password':'密码输入有误，请重新输入'}})
