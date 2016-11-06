@@ -1,0 +1,74 @@
+{%extends 'freshFruit/base_index.html'%}
+{% load static from staticfiles %}
+{%block title%}天天生鲜-搜索展示页{%endblock%}
+{%block content%}
+<div class="breadcrumb">
+		<a href="#">{{goodslist.goodsort.sortName}}</a>
+	</div>
+	<div class="main_wrap clearfix">
+
+			<ul class="goods_type_list clearfix">
+			{% if query %}
+					<h3 style="font-size: 15px;color: red; margin-top: -20px">搜索结果如下：</h3>
+				{% for result in page.object_list %}
+				<li>
+					<a href="/detail/?goodsId={{ result.object.id }}"><img src="{% static result.object.imgPath %}"></a>
+					<h4><a href="/detail/?goodsId={{result.object.id}}">{{ result.object.goodsName }}</a></h4>
+					<div class="operate">
+						<span class="prize">￥{{ result.object.goodsPrice }}</span>
+						<span class="unit">{{ result.object.goodsPrice }}/500g</span>
+						<a href="javascript:;" class="add_goods" title="加入购物车" value='{{i.id}}'></a>
+					</div>
+				</li>
+				{% empty %}
+			<p style="font-size: 20px;color: red;">你搜索的商品没有找到！！</p>
+			{% endfor %}
+
+			{% if page.has_previous or page.has_next %}
+				<div>
+					{% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; 上一页{% if page.has_previous %}</a>{% endif %}
+				|
+					{% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}下一页 &raquo;{% if page.has_next %}</a>{% endif %}
+				</div>
+			{% endif %}
+		</div>
+	{% endif %}
+		
+			</ul>
+		</div>
+	</div>
+	<script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+<script type="text/javascript">
+	$(function(){
+		var ahref=$('.pagenation .active').attr('href');
+		var apage=ahref.split('page=')
+		var max=parseInt($('#toright').prev('a').html())
+		index=ahref.indexOf(apage[1]);
+	
+		left=parseInt(apage[1])-1;
+		right=parseInt(apage[1])+1;
+		if (left<=0){left=1};
+		if (right>=max){right=max};
+
+		$('#toleft').attr({ href: apage[0]+'page='+String(left)});
+		$('#toright').attr({ href: apage[0]+'page='+String(right)});
+	})
+
+	$('.add_goods').click(function(){
+			$.ajax({
+   	 	url: '/addcart/',
+    	type: 'POST',
+    	dataType: 'json',
+    	data:{'goodsName':$('.add_goods').attr('value'),'buyCount':1}
+	})
+	.done(function(data) {
+		
+		$('#show_count').html(data.number)
+		}
+	)
+	.fail(function() {
+    alert('服务器超时，请重试！');
+	});
+}	)
+</script>
+{%endblock%}

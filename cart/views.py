@@ -41,7 +41,7 @@ def statements(request):
 
 @der.login_name		
 def place_order(request,dic):
-	user=UserInfo.objects.get(uName="wangchao")
+	# user=UserInfo.objects.get(uName="wangchao")
 	cartId=[]
 	if request.method == 'GET':
 		count=request.GET.get('count',None)
@@ -74,7 +74,7 @@ def place_order(request,dic):
 		orderlist.append(orderdic)
 		sumprice += goods.goodsPrice*int(count[i])
 	# area = AddrInfo.objects.filter(aUser_id=user.id).get(aDefaultAddr=True)
-	AddrList=user.addrinfo_set.all()
+	AddrList=dic['user'].addrinfo_set.all()
 	# print AddrList
 	dic=dict(dic,**{
 		'AddrList':AddrList,

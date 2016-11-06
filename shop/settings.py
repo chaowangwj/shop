@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/1.8/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
-
+# coding=utf-8
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
@@ -44,7 +44,7 @@ INSTALLED_APPS = (
     'index',
     'detail',
     'cart',
-    # 'haystack',
+    'haystack',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -122,3 +122,13 @@ TINYMCE_DEFAULT_CONFIG = {
     'width': 600,
     'height': 400,
 }
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    }
+}
+
+
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'

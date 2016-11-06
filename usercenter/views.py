@@ -67,9 +67,9 @@ def user_center_site(request,dic):
 			addrinfo.aDetaAddr = detaaddr
 			addrinfo.aPostCode = postcode
 			addrinfo.aPhoneNumber = phonenumber
-			user = UserInfo.objects.get(uName__exact='wangchao')
+			# user = UserInfo.objects.get(uName__exact='wangchao')
 
-			addrinfo.aUser = user
+			addrinfo.aUser = dic['user']
 			addrinfo.save()
 			print '写入完成'
 			# addrinfo.aDefaultAddr =
