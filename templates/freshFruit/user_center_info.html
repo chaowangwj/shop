@@ -6,22 +6,19 @@
 {%block content%}
 
 		<div class="right_content clearfix">
+				<form action="{% url 'usercenter:user_center_info'%}" method="post">
+
 				<div class="info_con  clearfix">
 				<h3 class="common_title2">基本信息</h3>
 						<ul class="user_info_list">
 							<li><span>用户名：</span>{{user.uName}}</li>
-							<li><span>联系方式：</span>{{user.uPhoneNumber}}</li>
-							<li><span>联系地址：</span>{{user.uAddr}}</li>			
+							<li id ='uphone'><span>联系方式：</span>{{user.uPhoneNumber}}</li>
+							<li id ='uaddr'><span>联系地址：</span>{{user.uAddr}}
+
+							<div class="edit_btn" id="edit_btn">编辑</div>
+							<input class="edit_submit"  type="submit" name="" value="提交">
+							</li>			
 						</ul>
-				</div>
-				<div class="user_info_change">
-					<h3 class="common_title2">完善信息</h3>
-					<form action="{% url 'usercenter:user_center_info'%}" method="post">
-							<div><span>联系方式：</span><input type="text" name="phonenumber" ></div>
-									
-							<div><span>联系地址：</span><input type="text" name="addr" ></div>
-							
-							<input type="submit" name="" value="提交">	
 					</form>	
 				</div>	
 				<h3 class="common_title2">最近浏览</h3>
@@ -30,7 +27,7 @@
 				{% for i in recentsee%}
 				<li>
 					<a href="/detail/?goodsId={{i.id}}"><img src="/static/{{i.imgPath}}"></a>
-					<h4><a href="/detail/?goodsId={{i.id}}">{{i.goodsName}}</a></h4>
+					<h4><a href="/detail/?goodsId={{good.id}}">{{i.goodsName}}</a></h4>
 					<div class="operate">
 						<span class="prize">￥{{i.goodsPrice}}</span>
 						<span class="unit">{{i.goodsPrice}}/500g</span>
@@ -43,4 +40,29 @@
 		</div>
 		</div>
 	</div>
+<script type="text/javascript">
+		$(function(){
+		$('#edit_btn').click(function(){
+			// if($(":submit").css("display")="inline-block")
+			// 	{
+			
+			// 	}
+			// else
+			// {
+			// 	$(":submit").css("display","inline-block");
+			// }
+			$("#uphone").html('<span>联系方式：</span><input type="text" name="phonenumber" value="{{info.user.uPhoneNumber}}">');
+			$("#uaddr").html('<span>联系地址：</span><input type="text" name="addr" value="{{info.user.uAddr}}"><div class="edit_btn" id="edit_btn">编辑</div><input class="edit_submit"  type="submit" name="" value="提交">');
+			$(":submit").css("display","inline-block");
+
+
+
+
+
+		})
+	})
+
+</script>
+
+	
 {%endblock%}

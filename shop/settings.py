@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'index',
     'detail',
     'cart',
+    # 'haystack',
 )
 
 MIDDLEWARE_CLASSES = (

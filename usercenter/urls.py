@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'^user_center_site/$',views.user_center_site,name='user_center_site'),
     url(r'^areal/$',views.areal,name='areal'),
     url(r'^areal([0-9]+)/$',views.areal2,name='areal2'),
+ 	url(r'^pay/$',views.pay,name='pay'),
 ]

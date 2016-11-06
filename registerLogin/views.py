@@ -84,6 +84,10 @@ from models import *
 from datetime import datetime
 from usercenter import der
 
+# 验证码测试页
+def verify(request):
+	return render(request,'freshFruit/verify.html')
+
 def index(request):
 	return render(request, 'freshFruit/index.html')
 
@@ -141,7 +145,9 @@ def login(request,dic):
 		if name and password:
 			try:
 				user = UserInfo.objects.get(uName=name)
-				if user.uPassword==password:
+				vecode=request.POST.get('ucode')
+				# 如果用户密码和验证都正确，登陆成功
+				if user.uPassword==password and vecode.upper()==request.session['verifycode']:
 					if request.POST.get('check', None) == 'on':
 						request.session['name'] = name   
 						# request.session['password'] = password    #状态保持

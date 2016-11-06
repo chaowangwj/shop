@@ -8,13 +8,20 @@
 		<div class="right_content clearfix">
 				<h3 class="common_title2">收货地址</h3>
 				<div class="site_con">
-					<dl>
-						<dt>当前地址：</dt>
+					<dl id='thedl'>
 						{% for i in addrinfo%}
-						<dd>{{ i.aProvince }} {{ i.aCity }} {%if i.aDis != None %}{{ i.aDis }}{%endif%}  {{i.aDetaAddr}}（{{ i.aAddressee }} 收） {{i.aPhoneNumber}}</dd>
+						<dd id="thedd">{{ i.aProvince }} {{ i.aCity }} {%if i.aDis != None %}{{ i.aDis }}{%endif%}  {{i.aDetaAddr}}（{{ i.aAddressee }} 收） {{i.aPhoneNumber}}
+						{% if i.default %}
+						<div class="edit_btn">默认地址</div>
+						{% else %}
+						<a href="{% url 'usercenter:user_center_site' %}?change={{i.id}}" class="edit_btn" id="thisa">设为默认</a>
+						<a href="{% url 'usercenter:user_center_site' %}?delete={{i.id}}" class="edit_btn">删除</a>
+						{% endif %}
+						</dd>
 						{%endfor%}
-					</dl>					
+					</dl>			
 				</div>
+				
 				<h3 class="common_title2">编辑地址</h3>
 				<div class="site_con">
 					<form action="{% url 'usercenter:user_center_site'%}" method="post">

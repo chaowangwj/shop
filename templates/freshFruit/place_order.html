@@ -2,18 +2,19 @@
 {% load static from staticfiles %}
 {%block title%}天天生鲜-提交订单{%endblock%}
 {%block option%}提交订单{%endblock%}
+{%block user_message%}{%endblock%}
 
 {%block content%}
 <h3 class="common_title">确认收货地址</h3>
-
+<form action="{% url 'cart:place_hander' %}" method="post">
 	<div class="common_list_con clearfix">
 		<dl>
 			<dt>寄送到：</dt>
-			{% for area in addr %}
-			<dd><input type="radio" name="" checked="">{{area.province}} {{area.city}} {{area.dis}} {{area.detail}}（{{area.addressee}} 收） {{area.phonenumber}}</dd>
+			{% for area in AddrList %}
+			<dd><input id="radio" type="radio" name="addr" value='{{area.id}}' {%if area.aDefaultAddr == True%}checked="true"  {%endif%} >{{area.aProvince}} {{area.aCity}} {{area.aDis}} {{area.aDetaAddr}}（{{area.aAddressee}} 收） {%for i in area.aPhoneNumber%}{%if forloop.counter <= 3 or forloop.counter > 7%}{{i}}{%else%}*{%endif%}{%endfor%}</dd>
 			{% endfor %}
 		</dl>
-		<a href="user_center_site.html" class="edit_site">编辑收货地址</a>
+		<a href="{% url 'usercenter:user_center_site'%}" class="edit_site">编辑收货地址</a>
 
 	</div>
 	
@@ -42,6 +43,9 @@
 			<li class="col05">小计</li>		
 		</ul>
 		{% for i in orderlist %}
+		<input type=hidden value='{{i.cartId}}' name='cartId'>
+		<input type=hidden value='{{i.goodscount}}' name='goodscount'>
+		<input type=hidden value='{{i.goods.id}}' name='goodsId'>
 		<ul class="goods_list_td clearfix">
 			<li class="col01">{{i.count}}</li>			
 			<li class="col02"><img src="/static/{{i.goods.imgPath}}"></li>
@@ -65,6 +69,14 @@
 	</div>
 
 	<div class="order_submit clearfix">
-		<a href="{% url 'cart:place_order'%}?list={{cartlist}}&&action=1" id="order_btn">提交订单</a>
+		<!-- <a href="{% url 'cart:place_hander'%}?list=1&&list=2" id="order_btn">提交订单</a> -->
+		<input type="submit" name="" value="提交订单" id="order_btn">
 	</div>	
+	</form>
+	<script type="text/javascript">
+		$('#addr').click(function(){
+				$(this).attr('name','addr').siblings('#addr').attr('name','')
+			});
+
+	</script>
 {%endblock%}

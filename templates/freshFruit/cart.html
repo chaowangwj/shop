@@ -12,10 +12,10 @@
 		<li class="col05">小计</li>
 		<li class="col06">操作</li>
 	</ul>
-<form action="/statements/" method="post">
+<form action="/place_order/" method="post">
 	{%for i in lis%}
 	<ul class="cart_list_td clearfix">
-		<li class="col01"><input type="checkbox" name="" id='per' checked="checked"></li>
+		<li class="col01"><input type="checkbox" name="id" value="{{i.cart.id}}" id='per' checked="checked"></li>
 		<li class="col02"><img src="{% static i.good.imgPath %}"></li>
 		<li class="col03" >{{i.good.goodsName}}<br><em>{{i.good.goodsPrice}}元/500g</em></li>
 		<li class="col04">500g</li>
@@ -23,7 +23,7 @@
 		<li class="col06">
 			<div class="num_add">
 				<a href="javascript:;" class="add fl">+</a>
-				<input type="text" class="num_show fl" value="{{i.cart.buyCount}}">	
+				<input type="text" class="num_show fl" value="{{i.cart.buyCount}}" name='count'>	
 				<a href="javascript:;" class="minus fl">-</a>	
 			</div>
 		</li>
@@ -36,12 +36,13 @@
 		<li class="col01"><input type="checkbox" name="" checked="checked" id='all'></li>
 		<li class="col02" >全选</li>
 		<li class="col03">合计(不含运费)：<span>¥</span><em>42.60</em><br>共计<b>2</b>件商品</li>
-		<li class="col04"><input type="submit" value='去结算' style="width: 100% ;height: 77px;background-color:#ff3d3d ;font-family: Microsoft Yahei;color: #fff;border:0px" ></li>
+		<li class="col04"><input type="submit" value='去结算' style="width: 100% ;height: 76px;background-color:#ff3d3d ;font-family: Microsoft Yahei;color: #fff;border:0px" ></li>
 		<!-- <a href="javascript:;">去结算</a> -->
 	</ul>
 </form>
 
 	<script type="text/javascript">
+
 
 		function count() {
 			// alert($(':checkbox:checked:not(#all)').length)
@@ -85,11 +86,11 @@
 		//全选全消
 		$('#all').click(function(){
 				if($(this).prop('checked')){
-					$(':checkbox:not(#all)').prop('checked',true).next().attr('name','count')
+					$(':checkbox:not(#all)').prop('checked',true).parent().siblings('.col06').children().children('input').attr('name','count')
 					compute();
 					count()
 				}else{
-					$(':checkbox:not(#all)').prop('checked',false).next().attr('name','');
+					$(':checkbox:not(#all)').prop('checked',false).parent().siblings('.col06').children().children('input').attr('name','');
 					compute();
 					count();
 				}
@@ -97,9 +98,11 @@
 			$(':checkbox:not(#all)').click(function(){
 				compute();
 				if($(this).prop('checked')){
-					$(this).next().attr('name','count')
+					$(this).parent().siblings('.col06').children().children('input').attr('name','count')
+					$(this).attr('name','id')
 				}else{
-					$(this).next().attr('name','')
+					$(this).parent().siblings('.col06').children().children('input').attr('name','')
+					$(this).attr('name','')
 				}
 			});
 			//删除

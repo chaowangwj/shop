@@ -25,9 +25,9 @@ def user_center_info(request,dic):
 		addr = request.POST.get('addr', None)
 		phonenumber = request.POST.get('phonenumber', None)
 		if addr and phonenumber:
-			user.uPhoneNumber = phonenumber
-			user.uAddr = addr
-			user.save()
+			dic['user'].uPhoneNumber = phonenumber
+			dic['user'].uAddr = addr
+			dic['user'].save()
 		return HttpResponseRedirect(reverse('usercenter:user_center_info'))
 
 
@@ -98,7 +98,7 @@ def areal2(request, pid):
 
 @der.login_name
 def user_center_order(request,dic):
-	orderList=Orders.objects.filter(isDelete=False).filter(userOrder=1).order_by("-id")
+	orderList=Orders.objects.filter(isDelete=False).filter(userOrder_id=dic['user'].id).order_by("-id")
  
 	pIndex = request.GET.get('page', None) #获取页面index
 	orderlist2, plist, pIndex = pagTab(orderList, pIndex, 2)  # 分页
@@ -126,6 +126,14 @@ def user_center_order(request,dic):
 
 	return render(request, 'freshFruit/user_center_order.html',dic)
 
+@der.login_yz
+@der.login_name
+def pay(request,dic):
+	orderId=request.GET.get('order',None)
+	order=Orders.objects.get(id=int(orderId))
+	order.isFinish=True
+	order.save()
+	return HttpResponseRedirect(reverse('usercenter:user_center_order'))
 
 def pagTab(list1, pIndex, num):
 	# print pIndex
@@ -136,3 +144,4 @@ def pagTab(list1, pIndex, num):
 	list2 = p.page(pIndex)
 	plist = p.page_range
 	return list2, plist, pIndex
+

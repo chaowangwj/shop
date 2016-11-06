@@ -1,9 +1,10 @@
 $(function(){ 
 
 	$(".add").click(function(){ 
-		$(".num_show").trigger("change");
+		
 		var t=$(this).parent().find('input[class*="num_show"]');
-		t.val(parseInt(t.val())+1) 	
+		t.val(parseInt(t.val())+1); 
+		$(".num_show").trigger("change");	
 		setTotal(); 
 	}); 
 
@@ -15,6 +16,7 @@ $(function(){
 			t.val(1); 
 		}
 		setTotal();
+		$(".num_show").trigger("change");
 	}); 
 
 	function setTotal(){ 
@@ -25,7 +27,7 @@ $(function(){
 	}
 
 $('.num_show').change(function(){
-		$('.buy_btn').attr({href:$('.buy_btn').attr('href').split('?')[0]+'?good='+$('.add_cart').attr('value')+'&&buyCount='+$('.num_show').val()})
+		$('.buy_btn').attr({href:$('.buy_btn').attr('href').split('?')[0]+'?id='+$('.add_cart').attr('value')+'&&count='+$('.num_show').val()})
 })
 		
 

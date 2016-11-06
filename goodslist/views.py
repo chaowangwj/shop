@@ -5,9 +5,10 @@ from models import *
 from datetime import datetime
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator
+from usercenter import der
 
-
-def list(request):
+@der.login_name 
+def list(request,dic):
     sort = request.GET.get('sort', None)
     if sort == '' or sort == None:
         sort = 1
@@ -42,6 +43,7 @@ def list(request):
             plist=plist[0:pIndex+2]
         else:
             plist=plist[pIndex-2:pIndex+1]
+
     data = {'goodslist': {
         'newgoodslist': newgoodslist,
         'orderlist': orderlist2,
@@ -52,8 +54,9 @@ def list(request):
         'pIndex': pIndex,
         'goodsort': goodsort
     }}
+    dic=dict(dic,**data)
 
-    return render(request, 'freshFruit/list.html', data)
+    return render(request, 'freshFruit/list.html', dic)
 
 
 def pagTab(list1, pIndex, num):

@@ -300,11 +300,40 @@ html,body{height:100%}
 .more_input{position:absolute;left:0;top:130px;width:100%}
 
 .more_input input{float:left;margin-top:2px;}
+/*验证码*/
+.yzm_check {
+	position: absolute;
+	outline:none;
+	width: 306px;
+	height: 36px;
+	margin-top: 135px;
+	font-size: 13px;
+	color: #a8a8a8;
+}
+.yzm_check .verifycode{
+	display: inline-block;
+	margin-left: 85px;
+}
+.yzm_check .yzm_input{
+	outline:none;
+	border:1px solid #e0e0e0;
+	font-size:14px;
+	position: absolute;
+	width:70px;
+	height:33px;
+	background-color: #f8f8f8;
+	margin-left: 0px;
+}
+.more_input{
+	position: absolute;
+	top: 175px;
+}
 .more_input label{float:left;margin-left:10px;}
-.more_input a{float:right;color:#666}
+.more_input a{float:right;color:#666;}
 .more_input a:hover{color:#ff8800}
 
-.input_submit{width:100%;height:40px;position:absolute;left:0;top:180px;background-color:#47aa34;color:#fff;font-size:22px;border:0px;font-family:'Microsoft Yahei';cursor:pointer;}
+.input_submit{width:100%;height:40px;position:absolute;left:0;top:200px;background-color:#47aa34;color:#fff;font-size:22px;border:0px;font-family:'Microsoft Yahei';cursor:pointer;}
+
 
 
 /* 注册页面 */
@@ -554,6 +583,12 @@ html,body{height:100%}
 	text-indent:30px;
 	font-size:14px;
 }
+/*cichu*/
+.user_info_list li .edit_btn{display:inline-block;border:1px solid #ccc;color:#666;padding:5px 5px;cursor:pointer;text-indent:0;text-align:center;float: right;width:48px;height:18px;line-height:20px;margin-top:10px;}
+.user_info_list li .edit_submit{
+	display:none;border:1px solid #ccc;color:#666;padding:5px 5px;cursor:pointer;text-indent:0;text-align:center;float: right;width:48px;height:30px;line-height:20px;margin-top:10px;
+}
+
 
 .user_info_list li span{
 	width:100px;
@@ -590,6 +625,9 @@ html,body{height:100%}
 	padding:10px 0;
 	margin-bottom:20px;
 }
+/*cichu*/
+.site_con .edit_btn{display:inline-block;border:1px solid #ccc;color:#ff8800;padding:5px 5px;text-indent:0;text-align:center;float: right;width:60px;height:18px;line-height:20px;}
+
 
 .site_con dt{
 	font-size:14px;

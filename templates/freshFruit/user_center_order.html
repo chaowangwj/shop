@@ -30,7 +30,14 @@
 							</td>
 							<td width="15%"></td>
 							<td width="15%">{%if orde.order.isFinish == 1%}已付款{%else%}待付款{%endif%}</td>
-							<td width="15%"><a href="#" class="oper_btn">{%if orde.order.isFinish == 1%}查看物流{%else%}去付款{%endif%}</a></td>
+							<td width="15%">
+							{%if orde.order.isFinish == 1%}
+							<a href="#" class="oper_btn">查看物流
+							{%else%}
+							<a href="{% url 'usercenter:pay'%}?order={{orde.order.id}}" class="oper_btn">去付款
+							{%endif%}
+							</a>
+							</td>
 						</tr>
 					</tbody>
 				</table>

@@ -15,7 +15,6 @@ class Migration(migrations.Migration):
             name='AddrInfo',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('aName', models.CharField(max_length=30)),
                 ('aProvince', models.CharField(max_length=15)),
                 ('aCity', models.CharField(max_length=15)),
                 ('aDis', models.CharField(max_length=15, null=True, blank=True)),
@@ -99,16 +98,26 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='Orders',
+            name='OrderDetail',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('goodsName', models.CharField(max_length=30)),
                 ('goodsPrice', models.DecimalField(max_digits=7, decimal_places=2)),
                 ('buyCount', models.IntegerField()),
+                ('good_id', models.ForeignKey(to='cart.Goods')),
+            ],
+            options={
+                'db_table': 'orderdetail',
+            },
+        ),
+        migrations.CreateModel(
+            name='Orders',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('isFinish', models.BooleanField(default=False)),
                 ('isDelete', models.BooleanField(default=False)),
                 ('orderTime', models.DateTimeField()),
-                ('extra', models.CharField(max_length=20, null=True, blank=True)),
+                ('orderNumber', models.CharField(max_length=20, null=True, blank=True)),
             ],
             options={
                 'db_table': 'orders',
@@ -151,6 +160,11 @@ class Migration(migrations.Migration):
             model_name='orders',
             name='userOrder',
             field=models.ForeignKey(to='cart.UserInfo'),
+        ),
+        migrations.AddField(
+            model_name='orderdetail',
+            name='orders_id',
+            field=models.ForeignKey(to='cart.Orders'),
         ),
         migrations.AddField(
             model_name='goods',
