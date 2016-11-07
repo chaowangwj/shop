@@ -32,18 +32,19 @@
 							<td width="15%">{%if orde.order.isFinish == 1%}已付款{%else%}待付款{%endif%}</td>
 							<td width="15%">
 							{%if orde.order.isFinish == 1%}
-							<a href="#" class="oper_btn">查看物流
+							<a href="javascript:;" class="oper_btn" id='oper_btn'>查看物流
 							{%else%}
 							<a href="{% url 'usercenter:pay'%}?order={{orde.order.id}}" class="oper_btn">去付款
 							{%endif%}
 							</a>
+							
 							</td>
 						</tr>
 					</tbody>
 				</table>
+				
+				<p style="display: none">{{orde.addr.aProvince}} {{orde.addr.aCity}} {{orde.addr.aDis}} {{orde.addr.aDetaAddr}}（{{orde.addr.aAddressee}} 收） {%for i in orde.addr.aPhoneNumber%}{%if forloop.counter <= 3 or forloop.counter > 7%}{{i}}{%else%}*{%endif%}{%endfor%}</p>	
 				{%endfor%}
-			
-
 				<div class="pagenation">
 					<a href="#" id='toleft'><上一页</a>
 					{%for index in plist%}
@@ -107,6 +108,9 @@ function add(a, b) {
 	
 		})
 	})
-
+	$('#oper_btn').click(function () {
+		$(this).parent().parent().parent().parent().next('p').toggle();
+	
+	})
 </script>
 {% endblock %}

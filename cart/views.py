@@ -96,11 +96,11 @@ def place_hander(request,dic):
 	goodsId= request.POST.get('goodsId')  #如果是立即购买的获取物品id
 	cartIdList= request.POST.getlist('cartId') #如果是购物车结算的的获取购物车id
 
-	
 	orders=Orders()
 	orders.orderTime=datetime.now()
 	orders.orderNumber=str(int(time.time()))
 	orders.userOrder_id=dic['user'].id
+	orders.addr=int(addr)
 	orders.save()
 	if cartIdList[0]:
 		for i in cartIdList:

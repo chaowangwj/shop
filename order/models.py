@@ -134,7 +134,7 @@ class Orders(models.Model):
     orderTime = models.DateTimeField()
     orderNumber = models.CharField(max_length=20,null=True,blank=True) #预留
     userOrder = models.ForeignKey('UserInfo')
-
+    
     class Meta():
         db_table = 'orders'
 

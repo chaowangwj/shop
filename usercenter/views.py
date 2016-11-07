@@ -142,9 +142,10 @@ def user_center_order(request,dic):
 	orders=[]
 	for order in orderlist2:
 		detaillist=[]
+		addr=AddrInfo.objects.get(id=order.addr)
 		for i in order.orderdetail_set.all():
 			detaillist.append({'od':i,'good':i.good_id})
-		orders.append({'order':order,'orderdetail':detaillist})
+		orders.append({'order':order,'orderdetail':detaillist,'addr':addr})
   
 	dic=dict(dic,**{
 					'orderlist':orders ,

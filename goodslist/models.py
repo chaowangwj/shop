@@ -133,7 +133,7 @@ class Orders(models.Model):
     isDelete = models.BooleanField(default=False)
     orderTime = models.DateTimeField()
     orderNumber = models.CharField(max_length=20,null=True,blank=True) #预留
-    fare = models.DecimalField(max_digits=7, decimal_places=2)
+    addr = models.IntegerField(null=True,blank=True)
     userOrder = models.ForeignKey('UserInfo')
     
     class Meta():
