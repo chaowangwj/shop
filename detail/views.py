@@ -36,7 +36,7 @@ def detail(request,dic):
 	dic=dict(dic, **dic2)
 	return render(request,'freshFruit/detail.html',dic)
 
-# @der.login_name
+@der.login_yz
 def comment(request,gid):
 	# print request.POST
 	comment=request.POST.get('comment',None)

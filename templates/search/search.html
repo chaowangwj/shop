@@ -17,7 +17,7 @@
 					<div class="operate">
 						<span class="prize">￥{{ result.object.goodsPrice }}</span>
 						<span class="unit">{{ result.object.goodsPrice }}/500g</span>
-						<a href="javascript:;" class="add_goods" title="加入购物车" value='{{i.id}}'></a>
+						<a href="javascript:;" class="add_goods" title="加入购物车" value='{{result.object.id}}'></a>
 					</div>
 				</li>
 				{% empty %}
@@ -55,11 +55,12 @@
 	})
 
 	$('.add_goods').click(function(){
+		thisgood=$(this).attr('value')
 			$.ajax({
    	 	url: '/addcart/',
     	type: 'POST',
     	dataType: 'json',
-    	data:{'goodsName':$('.add_goods').attr('value'),'buyCount':1}
+    	data:{'goodsName':thisgood,'buyCount':1}
 	})
 	.done(function(data) {
 		

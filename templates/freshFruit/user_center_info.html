@@ -31,7 +31,7 @@
 					<div class="operate">
 						<span class="prize">￥{{i.goodsPrice}}</span>
 						<span class="unit">{{i.goodsPrice}}/500g</span>
-						<a href="#" class="add_goods" title="加入购物车"></a>
+						<a href="javascript:;" class="add_goods" title="加入购物车" value='{{i.id}}'></a>
 					</div>
 				</li>
 				{%endfor%}
@@ -43,23 +43,32 @@
 <script type="text/javascript">
 		$(function(){
 		$('#edit_btn').click(function(){
-			// if($(":submit").css("display")="inline-block")
-			// 	{
 			
-			// 	}
-			// else
-			// {
-			// 	$(":submit").css("display","inline-block");
-			// }
 			$("#uphone").html('<span>联系方式：</span><input type="text" name="phonenumber" value="{{info.user.uPhoneNumber}}">');
 			$("#uaddr").html('<span>联系地址：</span><input type="text" name="addr" value="{{info.user.uAddr}}"><div class="edit_btn" id="edit_btn">编辑</div><input class="edit_submit"  type="submit" name="" value="提交">');
 			$(":submit").css("display","inline-block");
 
+		});
 
-
-
-
-		})
+			$('.add_goods').click(function(){
+		thisgood=$(this).attr('value')
+			$.ajax({
+   	 	url: '/addcart/',
+    	type: 'POST',
+    	dataType: 'json',
+    	data:{'goodsName':thisgood,'buyCount':1}
+	})
+	.done(function(data) {
+		
+		$('#show_count').html(data.number)
+		}
+	)
+	.fail(function() {
+		// error_name = 'True';
+    alert('服务器超时，请重试！');
+	});
+}
+		)
 	})
 
 </script>

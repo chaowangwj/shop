@@ -76,11 +76,12 @@
 	})
 
 	$('.add_goods').click(function(){
+		thisgood=$(this).attr('value')
 			$.ajax({
    	 	url: '/addcart/',
     	type: 'POST',
     	dataType: 'json',
-    	data:{'goodsName':$('.add_goods').attr('value'),'buyCount':1}
+    	data:{'goodsName':thisgood,'buyCount':1}
 	})
 	.done(function(data) {
 		

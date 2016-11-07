@@ -6,7 +6,7 @@ def login_name(fn):
         username = request.session.get('name', default='')
         number=0
         user=''
-        print username
+
         if username:
 			user=UserInfo.objects.get(uName=username)
 			number=user.cart_set.filter(isDelete=False).count()

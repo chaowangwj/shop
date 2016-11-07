@@ -19,13 +19,14 @@ def user_center_info(request,dic):
 		for i in recentsee:
 			goodlist.append(Goods.objects.get(id=int(i.goodsName)))
 			# goodlist.append(Goods.objects.get(goodsName=i.goodsName))
-		
-		dic=dict(dic,**{ 'recentsee': goodlist[-5:]})
+		recv=goodlist[-5:]
+		recv.reverse()
+		dic=dict(dic,**{ 'recentsee': recv})
 		return render(request, 'freshFruit/user_center_info.html',dic )
 	elif request.method == 'POST':
 		addr = request.POST.get('addr', None)
 		phonenumber = request.POST.get('phonenumber', None)
-		if addr and phonenumber:
+		if addr and str(phonenumber).isdigit() and len(phonenumber) == 11:
 			dic['user'].uPhoneNumber = phonenumber
 			dic['user'].uAddr = addr
 			dic['user'].save()
@@ -126,7 +127,7 @@ def areal2(request, pid):
 @der.login_yz
 @der.login_name
 def user_center_order(request,dic):
-	orderList=Orders.objects.filter(isDelete=False).filter(userOrder_id=dic['user'].id).order_by("-id")
+	orderList=Orders.objects.filter(isDelete=False).filter(userOrder_id=dic['user'].id).order_by("-id").order_by("isFinish")
  
 	pIndex = request.GET.get('page', None) #获取页面index
 	orderlist2, plist, pIndex = pagTab(orderList, pIndex, 2)  # 分页
@@ -145,7 +146,6 @@ def user_center_order(request,dic):
 			detaillist.append({'od':i,'good':i.good_id})
 		orders.append({'order':order,'orderdetail':detaillist})
   
-	print orders
 	dic=dict(dic,**{
 					'orderlist':orders ,
 					'plist':plist,
