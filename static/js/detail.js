@@ -45,7 +45,8 @@ $('.num_show').change(function(){
 	)
 	.fail(function() {
 		// error_name = 'True';
-    alert('服务器超时，请重试！');
+		window.location.href='/login/'
+    // alert('服务器超时，请重试！');
 	});
 }
 		)

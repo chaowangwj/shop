@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from . import der
 from django.core.paginator import Paginator
 
+@der.login_yz
 @der.login_name
 def user_center_info(request,dic):
 	# name = request.session.get('name')
@@ -30,7 +31,7 @@ def user_center_info(request,dic):
 			dic['user'].save()
 		return HttpResponseRedirect(reverse('usercenter:user_center_info'))
 
-
+@der.login_yz
 @der.login_name
 def user_center_site(request,dic):
 	if request.method == 'GET':
@@ -41,9 +42,35 @@ def user_center_site(request,dic):
 
 		for i in addrinfo:
 			a = i.aPhoneNumber[0:]
-			list2.append({'id': i.id, 'aProvince': i.aProvince, 'aCity': i.aCity,
-						  'aDis': i.aDis, 'aAddressee': i.aAddressee, 'aPhoneNumber': a[0:3] + u'****' + a[7:]})
+			list2.append({'id': i.id, 
+			             'aProvince': i.aProvince, 
+			             'aCity': i.aCity,
+						 'aDis': i.aDis, 
+						 'aAddressee': i.aAddressee, 
+						 'aPhoneNumber': a[0:3] + u'****' + a[7:],
+						 'default':i.aDefaultAddr
+						 })
 		dic=dict(dic,**{'addrinfo': list2})
+		udelete = request.GET.get('delete', None)
+		uchange = request.GET.get('change', None)
+		if udelete:
+			dAddr = AddrInfo.objects.get(id=udelete)
+			dAddr.isDelete = True
+			dAddr.save()
+			return HttpResponseRedirect(reverse('usercenter:user_center_site'))
+		if uchange:
+			dAddr = AddrInfo.objects.get(id=uchange)
+			try:
+				deFault = AddrInfo.objects.filter(aUser=user.id).get(aDefaultAddr=True)
+				
+			except Exception, e:
+				pass
+			else:
+				deFault.aDefaultAddr=False
+				deFault.save()
+			dAddr.aDefaultAddr = True
+			dAddr.save()
+			return HttpResponseRedirect(reverse('usercenter:user_center_site'))
 		return render(request, 'freshFruit/user_center_site.html', dic)
 
 	elif request.method == 'POST':
@@ -96,6 +123,7 @@ def areal2(request, pid):
 		list2.append({'id': a.id, 'title': a.aTitle})
 	return JsonResponse({'data': list2})
 
+@der.login_yz
 @der.login_name
 def user_center_order(request,dic):
 	orderList=Orders.objects.filter(isDelete=False).filter(userOrder_id=dic['user'].id).order_by("-id")

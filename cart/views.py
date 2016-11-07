@@ -8,7 +8,7 @@ from datetime import datetime
 # from django.utils import timezone
 import time
 from usercenter import der
-
+@der.login_yz
 @der.login_name
 def cart(request,dic):
 	# user = UserInfo.objects.get(uName="wangchao")
@@ -38,7 +38,7 @@ def statements(request):
 	print '......'
 	print goodId
 
-
+@der.login_yz
 @der.login_name		
 def place_order(request,dic):
 	# user=UserInfo.objects.get(uName="wangchao")

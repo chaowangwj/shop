@@ -8,7 +8,7 @@ from tinymce.models import HTMLField
 
 class UserInfo(models.Model):
     uName = models.CharField(max_length=30)
-    uPassword = models.CharField(max_length=20)
+    uPassword = models.CharField(max_length=50)
     uEmail = models.CharField(max_length=30)
     uPhoneNumber = models.CharField(max_length=15, null=True)
     uAddr = models.CharField(max_length=50, null=True, blank=True)

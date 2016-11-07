@@ -52,7 +52,7 @@ def comment(request,gid):
 		print gid
 		# print reverse('detail:detail',kwargs={'goodsId':goodId})reverse('detail:detail',args=[gid])
 		return HttpResponseRedirect('/detail/?goodsId='+gid)
-
+@der.login_yz
 def addcart(request):
 	goodsID=request.POST.get('goodsName',None)
 	buyCount=request.POST.get('buyCount',None)
