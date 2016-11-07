@@ -6,7 +6,7 @@
 
 {%block content%}
 <h3 class="common_title">确认收货地址</h3>
-<form action="{% url 'cart:place_hander' %}" method="post">
+<form action="{% url 'cart:place_hander' %}" method="post" id='myform'>
 	<div class="common_list_con clearfix">
 		<dl>
 			<dt>寄送到：</dt>
@@ -77,6 +77,30 @@
 		$('#addr').click(function(){
 				$(this).attr('name','addr').siblings('#addr').attr('name','')
 			});
+
+		$('#myform').submit(function() {
+			flage=false
+			if ($('.common_list_con dl dd input').length ==0){
+				flage=false
+			}
+			else {
+
+				$('.common_list_con dl dd input').each(function () {
+				
+				if($(this).prop('checked')){
+					flage=true
+																}
+
+			})
+		}
+		if (flage==true){
+			return true
+		}
+		else{
+			alert('地址未选择')
+			return false
+		}
+		})
 
 	</script>
 {%endblock%}

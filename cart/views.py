@@ -31,12 +31,12 @@ def deleteHander(request):
 		return JsonResponse({'response':'1'})
 		
 
-def statements(request):
-	count=request.POST.getlist('count',None)
-	goodId=request.POST.getlist('id',None)
-	print count
-	print '......'
-	print goodId
+# def statements(request):
+# 	count=request.POST.getlist('count',None)
+# 	goodId=request.POST.getlist('id',None)
+# 	print count
+# 	print '......'
+# 	print goodId
 
 @der.login_yz
 @der.login_name		
@@ -74,7 +74,7 @@ def place_order(request,dic):
 		orderlist.append(orderdic)
 		sumprice += goods.goodsPrice*int(count[i])
 	# area = AddrInfo.objects.filter(aUser_id=user.id).get(aDefaultAddr=True)
-	AddrList=dic['user'].addrinfo_set.all()
+	AddrList=dic['user'].addrinfo_set.all().filter(isDelete=False)
 	# print AddrList
 	dic=dict(dic,**{
 		'AddrList':AddrList,
@@ -96,7 +96,6 @@ def place_hander(request,dic):
 	goodsId= request.POST.get('goodsId')  #如果是立即购买的获取物品id
 	cartIdList= request.POST.getlist('cartId') #如果是购物车结算的的获取购物车id
 
-	print cartIdList
 	orders=Orders()
 	orders.orderTime=datetime.now()
 	orders.orderNumber=str(int(time.time()))

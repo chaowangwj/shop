@@ -10,7 +10,7 @@ urlpatterns = [
     # url(r'^register/$',views.register,name="register"),
     # url(r'^place_order/$',views.place_order,name="place_order"),
     url(r'^deleteHander/$',views.deleteHander,name="deleteHander"),
-    url(r'^statements/$',views.statements,name="statements"),
+    # url(r'^statements/$',views.statements,name="statements"),
  	url(r'^place_order/$',views.place_order,name="place_order"),
     url(r'^place_hander/$',views.place_hander,name="place_hander"),
 ]
