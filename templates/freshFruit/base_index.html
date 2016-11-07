@@ -26,12 +26,12 @@
 				<h1>全部商品分类</h1>	
 				<span></span>			
 				<ul class="subnav">
-					<li><a href="{% url 'goodslist:list'%}?order=id&&sort=1&&page={{goodslist.pindex}}" class="fruit">新鲜水果</a></li>
-					<li><a href="{% url 'goodslist:list'%}?order=id&&sort=2&&page={{goodslist.pindex}}" class="seafood">海鲜水产</a></li>
-					<li><a href="{% url 'goodslist:list'%}?order=id&&sort=3&&page={{goodslist.pindex}}" class="meet">猪牛羊肉</a></li>
-					<li><a href="{% url 'goodslist:list'%}?order=id&&sort=4&&page={{goodslist.pindex}}" class="egg">禽类蛋品</a></li>
-					<li><a href="{% url 'goodslist:list'%}?order=id&&sort=5&&page={{goodslist.pindex}}" class="vegetables">新鲜蔬菜</a></li>
-					<li><a href="{% url 'goodslist:list'%}?order=id&&sort=6&&page={{goodslist.pindex}}" class="ice">速冻食品</a></li>
+
+
+			{% for temp in SortsMsg %}
+			<li><a href="{% url 'goodslist:list'%}?order=id&&sort={{temp.id}}" class="{{temp.sortClass}}">{{temp.sortName}}</a></li>
+			{% endfor temp %}
+
 				</ul>
 			</div>
 			<ul class="navlist fl">

@@ -21,7 +21,7 @@
 <div class="breadcrumb">
 		<a href="#">全部分类</a>
 		<span>></span>
-		<a href="#">新鲜水果</a>
+		<a href="{% url 'goodslist:list'%}?order=id&&sort={{goodSort.id}}">{{goodSort.sortName}}</a>
 		<span>></span>
 		<a href="#">商品详情</a>
 	</div>

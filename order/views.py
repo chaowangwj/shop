@@ -5,14 +5,7 @@ from models import *
 from datetime import datetime
 import random
 
-# Create your views here.
-def index(request):
-	return render(request, 'freshFruit/index.html')
 
-
-# def order(request):
-# 	addrlist = AddrInfo.objects.filter(isDelete=False).filter(aUser='张三').filter(aDefaultAddr=True)
-# 	return render(request, 'freshFruit/place_order.html',{'addr':addrlist})
 def order(request):
 	list1 = AddrInfo.objects.filter(isDelete=False).filter(aName='张三').filter(aDefaultAddr=True)
 	list2=[]

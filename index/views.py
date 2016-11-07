@@ -11,7 +11,6 @@ from django.core.urlresolvers import reverse
 def index(request,dic):
 	# 拿到产品分类信息
 	SortsMsg=GoodSort.objects.all()
-
 	message=[]
 	for sort in SortsMsg:
 		message.append({'sort':sort,'goodMsgList':sort.goods_set.all().order_by('goodsName')[0:4],'goodOtherList':sort.goods_set.all().order_by('goodsName')[4:7]})
@@ -37,4 +36,7 @@ def callus(request):
 # 招聘人才界面
 def joinus(request):
 	return render(request,'freshFruit/joinus.html')
+
+def choujiang(request):
+	return render(request,'freshFruit/choujiang.html')
 

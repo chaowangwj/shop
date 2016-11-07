@@ -15,16 +15,17 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-
+from index import viewSearch
+from haystack.views import SearchView
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^tinymce/', include('tinymce.urls')),
-    url(r'^search/', include('haystack.urls')),
+    # url(r'^search/', include('haystack.urls')),
     url(r'^',include('registerLogin.urls',namespace='registerLogin')),
     url(r'^',include('usercenter.urls',namespace='usercenter')),
     url(r'^',include('goodslist.urls',namespace='goodslist')), 
     url(r'^',include('index.urls',namespace='index')),
     url(r'^',include('detail.urls',namespace='detail')),
     url(r'^',include('cart.urls',namespace='cart')),
-
+    url(r'^search/', viewSearch.MySearchView.as_view(), name='search_view'),
 ]

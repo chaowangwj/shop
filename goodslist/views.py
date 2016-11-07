@@ -9,6 +9,9 @@ from usercenter import der
 
 @der.login_name 
 def list(request,dic):
+    '''
+    商品列表呈现，默认以id排序，可以接收参数按照价格以及购买数量排序，新品推荐取出最新两个种类的商品
+    '''
     sort = request.GET.get('sort', None)
     if sort == '' or sort == None:
         sort = 1
@@ -43,7 +46,7 @@ def list(request,dic):
             plist=plist[0:pIndex+2]
         else:
             plist=plist[pIndex-2:pIndex+1]
-
+    SortsMsg=GoodSort.objects.all()
     data = {'goodslist': {
         'newgoodslist': newgoodslist,
         'orderlist': orderlist2,
@@ -53,14 +56,18 @@ def list(request,dic):
         'ordertype': order,
         'pIndex': pIndex,
         'goodsort': goodsort
-    }}
+    },
+    'SortsMsg':SortsMsg
+    }
     dic=dict(dic,**data)
-
+    
     return render(request, 'freshFruit/list.html', dic)
 
 
 def pagTab(list1, pIndex, num):
-    # print pIndex
+    '''
+    分页函数
+    '''
     p = Paginator(list1, num)
     if pIndex == '' or pIndex == None:
         pIndex = '1'

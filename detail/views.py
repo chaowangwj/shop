@@ -4,12 +4,14 @@ from django.http import *
 from models import *
 from datetime import datetime
 from usercenter import der
-# import os
 from django.core.urlresolvers import reverse
 
 
 @der.login_name
 def detail(request,dic):
+	'''
+	商品详情页呈现
+	'''
 	goodsId=request.GET.get('goodsId')
 	if goodsId:
 		good = Goods.objects.get(pk=goodsId)
@@ -27,8 +29,11 @@ def detail(request,dic):
 			rec.goodsName=goodsId
 			rec.user_id=dic['user'].id
 			rec.save()
-			print '写入rec完成'
+
+	SortsMsg=GoodSort.objects.all()	
 	dic2 ={
+	'SortsMsg':SortsMsg,
+	'goodSort':good.goodSort,
 	'good':good,
 	'newgoodslist':newgoodslist,
 	'GoodsComment':GoodsComment,
@@ -38,10 +43,10 @@ def detail(request,dic):
 
 @der.login_yz
 def comment(request,gid):
-	# print request.POST
+	'''
+	商品评论
+	'''
 	comment=request.POST.get('comment',None)
-	# goodId=request.POST.get('commgood',None)
-	# print comment,goodId
 	if comment and gid:
 		goodc=GoodsComment()
 		goodc.userName=request.session['name']
@@ -49,11 +54,13 @@ def comment(request,gid):
 		goodc.comment=comment
 		goodc.goods_id=int(gid)
 		goodc.save()
-		print gid
-		# print reverse('detail:detail',kwargs={'goodsId':goodId})reverse('detail:detail',args=[gid])
+	
 		return HttpResponseRedirect('/detail/?goodsId='+gid)
 @der.login_yz
 def addcart(request):
+	'''
+	加入购物车操作,写入数据库
+	'''
 	goodsID=request.POST.get('goodsName',None)
 	buyCount=request.POST.get('buyCount',None)
 	if goodsID and buyCount:
@@ -65,7 +72,6 @@ def addcart(request):
 		cart.userCart_id=user.pk
 		cart.save()
 		number=user.cart_set.filter(isDelete=False).count()
-		print '加入成功'
 		return JsonResponse({'number':number})
 
 
