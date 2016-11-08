@@ -128,7 +128,8 @@ def areal2(request, pid):
 @der.login_name
 def user_center_order(request,dic):
 	orderList=Orders.objects.filter(isDelete=False).filter(userOrder_id=dic['user'].id).order_by("-id").order_by("isFinish")
- 
+
+ 	# orderList=Orders.objects.filter(isDelete=False).filter(userOrder_id=dic['user'].id).filter(isFinish=False).order_by("id")+Orders.objects.filter(isDelete=False).filter(userOrder_id=dic['user'].id).filter(isFinish=True).order_by("id")
 	pIndex = request.GET.get('page', None) #获取页面index
 	orderlist2, plist, pIndex = pagTab(orderList, pIndex, 2)  # 分页
 	if len(plist)>=3:   #页码显示页数

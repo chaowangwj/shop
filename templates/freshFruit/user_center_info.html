@@ -44,8 +44,8 @@
 		$(function(){
 		$('#edit_btn').click(function(){
 			
-			$("#uphone").html('<span>联系方式：</span><input type="text" name="phonenumber" value="{{info.user.uPhoneNumber}}">');
-			$("#uaddr").html('<span>联系地址：</span><input type="text" name="addr" value="{{info.user.uAddr}}"><div class="edit_btn" id="edit_btn">编辑</div><input class="edit_submit"  type="submit" name="" value="提交">');
+			$("#uphone").html('<span>联系方式：</span><input type="text" name="phonenumber" value="{{user.uPhoneNumber}}">');
+			$("#uaddr").html('<span>联系地址：</span><input type="text" name="addr" value="{{user.uAddr}}"><div class="edit_btn" id="edit_btn">编辑</div><input class="edit_submit"  type="submit" name="" value="提交">');
 			$(":submit").css("display","inline-block");
 
 		});
