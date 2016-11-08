@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ohdd@qol#)x&)5&h_jq1@e&)5#=f3+37kq0cwv=kq(=f%x#nsx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*',]
 
 
 # Application definition
@@ -116,6 +116,9 @@ MEDIA_ROOT=os.path.join(BASE_DIR,"static")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+STATIC_ROOT='/var/www/shop/static/'
+STATIC_URL='/static/'
+
 
 TINYMCE_DEFAULT_CONFIG = {
     'theme': 'advanced',

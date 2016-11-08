@@ -40,21 +40,9 @@
 	<script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
 <script type="text/javascript">
 	$(function(){
-		var ahref=$('.pagenation .active').attr('href');
-		var apage=ahref.split('page=')
-		var max=parseInt($('#toright').prev('a').html())
-		index=ahref.indexOf(apage[1]);
 	
-		left=parseInt(apage[1])-1;
-		right=parseInt(apage[1])+1;
-		if (left<=0){left=1};
-		if (right>=max){right=max};
 
-		$('#toleft').attr({ href: apage[0]+'page='+String(left)});
-		$('#toright').attr({ href: apage[0]+'page='+String(right)});
-	})
-
-	$('.add_goods').click(function(){
+$('.add_goods').click(function(){
 		thisgood=$(this).attr('value')
 			$.ajax({
    	 	url: '/addcart/',
@@ -71,5 +59,10 @@
     alert('服务器超时，请重试！');
 	});
 }	)
+
+		
+	})
+
+	
 </script>
 {%endblock%}

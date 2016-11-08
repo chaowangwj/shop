@@ -32,7 +32,7 @@
 					<form action="{% url 'registerLogin:login'%}" method="post">
 						<input type="text" name="username" class="name_input" placeholder="请输入用户名" value="{{user.uName}}">
 						<div class="user_error">{{error.name}}</div>
-						<input type="password" name="pwd" class="pass_input" placeholder="请输入密码" value="{{user.uPassword}}" >
+						<input type="password" name="pwd" class="pass_input" placeholder="请输入密码"  >
 						<div class="pwd_error">{{error.password}}</div>
 						<div class='yzm_check'>
 								<!-- 验证码 -->															
